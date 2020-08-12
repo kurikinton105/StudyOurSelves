@@ -68,7 +68,7 @@ def do_admin_login():
         flask_login.login_user(user)
         print("ログインしました。")
         #return home()
-        return flask.redirect(flask.url_for('protected'))
+        return flask.redirect(flask.url_for('home'))
     else:
         flash('パスワードまたは、ユーザー名が違います。')
         return home()
