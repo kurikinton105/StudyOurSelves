@@ -3,9 +3,9 @@ from .views.user import user_router
 
 def create_app():
 
-  app = Flask(__name__)
-  app.register_blueprint(user_router, url_prefix='/api')
+  api_app = Flask(__name__)
+  api_app.register_blueprint(user_router, url_prefix='/api')
 
-  return app
+  return api_app
 
-app = create_app()
+api_app = create_app()
