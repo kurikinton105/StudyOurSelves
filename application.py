@@ -1,9 +1,9 @@
 from flask import Flask, render_template,request #追加
-from bag_of_words import bag_of_words_sum
-from MakeClassEasy import MakeClassEasy
 from flask import Flask
 from flask import Flask,flash,redirect,render_template,request,session,abort
-
+from api.views.user import user_router
+from flask import Blueprint, request, make_response, jsonify
+import json
 app = Flask(__name__)
 
 #Login処理の試しを作ってみる
@@ -36,53 +36,23 @@ def logout():
    session['logged_in'] = False
    return home()
 
+@app.route("/api")
+def create_app():
 
+  app.register_blueprint(user_router, url_prefix='/api')
 
+  return app
 
-@app.route("/make", methods=["GET", "POST"])
-def main_page():
-    if request.method == 'GET':
-        #print("GET")
-        text = "ここに結果が出力されます"
-        data_word = [" "]
-        val = False
-        return render_template("make-class-easy.html",text=text,data_word=data_word,val = val)
-    elif request.method == 'POST':
-        #print("POST")
-        val = True #フラグを１にする
-        text = request.form["input_text"]
-        try:
-            result,data_word = bag_of_words_sum(str(text),50,100)
-            return render_template("make-class-easy.html",text=result,data_word=data_word,val = val)
-        except:
-            return render_template("make-class-easy.html",text="Error:文章は２文以上にしてください。もう一度文章を入力してください")
-
-
-@app.route("/develop", methods=["GET", "POST"])
-def develop_page():
-    if request.method == 'GET':
-        #print("GET")
-        text = "ここに結果が出力されます"
-        data_word = [" "]
-        val = False
-        return render_template("make-class-easy-develop.html",text=text,data_explain=data_word,val = val)
-    elif request.method == 'POST':
-        #print("POST")
-        val = True #フラグを１にする
-        text = request.form["input_text"]
-        try:
-            if(request.args.get('c') == None):
-                c= 3
-            else:
-                c = int(request.args.get('c'))
-        except:
-            return render_template("make-class-easy-develop.html",text="Error:不正なクエリパラメータ。使い方:URLの最後に?c=数値　をつけてください。")
-        try:
-            result,explains,time = MakeClassEasy(str(text),50,100,c)
-            return render_template("make-class-easy-develop.html",text=result,data_explain=explains,val = val,process_time = time)
-        except:
-            return render_template("make-class-easy-develop.html",text="Error:文章は２文以上にしてください。もう一度文章を入力してください")
-
+@app.route('/api/users', methods=['GET'])
+def get_user_list():
+  return make_response(jsonify({ #この値を返す予定
+    'users': [
+       {
+         'id': 1,
+         'name': 'John'
+       }
+     ]
+  }))
 
 ## おまじない
 if __name__ == "__main__":
