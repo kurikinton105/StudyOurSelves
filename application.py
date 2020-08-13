@@ -62,7 +62,7 @@ def home():
        #予定データのソート
        sort_cut_data = calender_sort(ToDoList_json)
 
-       return render_template('home.html',id_name=flask_login.current_user.id, ToDo = sort_cut_data)
+       return render_template('home_ver2.html',id_name=flask_login.current_user.id, ToDo = sort_cut_data)
 # ------------------------------------------------------------------
 @app.route('/login')
 def showloginpage():
@@ -92,7 +92,7 @@ def do_admin_login():
 @flask_login.login_required #ログインが必要だよ
 def protected():
     print(flask_login.current_user.id)
-    return render_template('home.html',id_name=flask_login.current_user.id)
+    return render_template('home_ver2.html',id_name=flask_login.current_user.id)
     #return 'Logged in as: ' + flask_login.current_user.id
 
 # ------------------------------------------------------------------

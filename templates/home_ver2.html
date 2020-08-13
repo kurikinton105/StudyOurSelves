@@ -5,7 +5,7 @@
         <title>StudeyOurSelves</title>
         <meta name="description" content="共有タスク管理するWebアプリケーション">
 
-        <!--CSS----------------------------------------------->
+        <!--CSS-->
         <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
         <link rel="stylesheet" href="../static/styles/home_ver2.css">
     </head>
@@ -13,13 +13,13 @@
     <body>
         <header>
             <div class="title">
-                <a href="index.html">SOS</a>
+                <a href="/index">SOS</a>
             </div>
             <div class="menus">
                 <ul>
                     <!--ユーザー情報編集ページへ-->
-                    <li><a href="edit.html">ユーザー名</a></li>
-                    <li><a href="index.html">ログアウト</a></li>
+                    <li><a href="/edit">ユーザー名</a></li>
+                    <li><a href="/logout">ログアウト</a></li>
                 </ul>
             </div>
         </header>
@@ -27,38 +27,21 @@
             <div class="list">
                 <h1>Menus</h1>
                 <ul>
-                    <li><a href="edit.html">ユーザー情報編集</a></li>
-                    <li><a href="register_class.html">授業登録</a></li>
-                    <li><a href="add_event.html">予定追加</a></li>
+                    <li><a href="/edit">ユーザー情報編集</a></li>
+                    <li><a href="/register_class">授業登録</a></li>
+                    <li><a href="/add_event">予定追加</a></li>
                 </ul>
             </div>
             <div class="schedules">
                 <h1>Schedules</h1>
-                <div class="event">
-                    <div class="date">2020-8-15</div>
-                    <div class="sub-title">
-                        <a href="class.html">イベント名1</a>
+                {% for ToDoContent in ToDo %}
+                    <div class="event">
+                        <div class="date">{{ToDoContent['date']}}</div>
+                        <div class="sub-title">
+                            <a href="/class">{{ToDoContent['id']}}</a>  {{ToDoContent['info']}}
+                        </div>
                     </div>
-                </div>
-                <div class="event">
-                    <div class="date">2020-8-15</div>
-                    <div class="sub-title">
-                        <a href="class.html">イベント名2</a>
-                    </div>
-                </div>
-                <div class="event">
-                    <div class="date">2020-8-15</div>
-                    <div class="sub-title">
-                        <a href="class.html">イベント名3</a>
-                    </div>
-                </div>
-                <div class="event">
-                    <div class="date">2020-8-15</div>
-                    <div class="sub-title">
-                        <a href="class.html">イベント名4</a>
-                    </div>
-                </div>
-                
+                {% endfor %}
             </div>
         </main>
     </body>
