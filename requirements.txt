@@ -7,3 +7,5 @@ requests==2.23.0
 datetime
 json
 flask_login
+numpy
+difflib
