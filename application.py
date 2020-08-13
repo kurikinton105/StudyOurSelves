@@ -7,7 +7,7 @@ from flask import Blueprint, request, make_response, jsonify
 import json
 import datetime
 from api.__init__ import api_app
-from code_def import calender_sort
+from code_def import calender_sort,search_class
 
 app = Flask(__name__)
 
@@ -117,6 +117,16 @@ def protected():
 @app.route('/register_class')
 def register_class():
     return render_template('register_class.html',classlist = classlist_json)
+
+#サーチの時の機能を追加
+@app.route('/searchtext', methods=['POST']) #ここでログインのPOSTを行う
+def searching():
+    search_text = flask.request.form['searching'] #searchボックスの中身を取得
+    print(search_text)
+    search_json = search_class(search_text,classlist_json)
+    #search_json2 = json.loads(search_json)
+    return render_template('register_class.html',classlist = search_json)
+
 
 # classページの動的作成
 @app.route('/class/<classname>')
