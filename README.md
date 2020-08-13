@@ -13,7 +13,7 @@ jima884 [@jima884](https://github.com/jima884)
 
 ## 使うための前準備
 #### ライブラリのインストール
-1. コマンドでsummary_class_publicフォルダ内に移動し 
+1. コマンドでフォルダ内に移動し 
 ```bash
     $pip install -r requirements.txt
     または
