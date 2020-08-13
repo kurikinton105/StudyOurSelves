@@ -5,7 +5,7 @@
         <title>StudeyOurSelves-login</title>
         <meta name="description" content="共有タスク管理するWebアプリケーション">
 
-        <!--CSS----------------------------------------------->
+        <!--CSS-->
         <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
         <link rel="stylesheet" href="../static/styles/new.css">
     </head>
@@ -17,26 +17,26 @@
             </div>
             <div class="menus">
                 <ul>
-                    <li><a href="login.html">ログイン</a></li>
-                    <li><a href="new.html">新規登録</a></li>
+                    <li><a href="/login">ログイン</a></li>
+                    <li><a href="/new">新規登録</a></li>
                 </ul>
             </div>
         </header>
         <main>
             <div class="login">
                 <h1>新規登録</h1>
-                <form action="" method="" name="">
+                <form action="/newpost" method="POST">
                     <div>
                         <label for="email"><p>メールアドレス</p></label>
-                        <input type="email" id="email" name="your-email">
+                        <input type="email" id="email" name="email">
                     </div>
                     <div>
                         <label for="password"><p>パスワード</p></label>
-                        <input type="password" id="password" name="your-password">
+                        <input type="password" id="password" name="password">
                     </div>
                     <div>
                         <label for="re-password"><p>パスワードの確認</p></label>
-                        <input type="password" id="re-password" name="your-re-password">
+                        <input type="password" id="re-password" name="re-password">
                     </div>
                     <input type="submit" class="button" value="送信">
                 </form>
