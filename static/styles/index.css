@@ -1,0 +1,66 @@
+/*共通レイアウト--------------------------*/
+*{
+    text-decoration: none;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/*header---------------------------------*/
+header{
+    align-items: center;
+    background-color: #560d04;
+    display: flex;
+    margin: 0 auto;
+}
+header a{
+    color: #f1eac3;
+}
+
+
+.title{
+    margin-left: 1.5rem;
+}
+.title a{
+    font-family: serif;
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.menus{
+    margin-right: 1.5rem;
+}
+.menus ul{
+    display: flex;
+    list-style: none;
+}
+.menus li{
+    padding: 1rem;
+}
+.menus li a:hover{
+    color: #a6ce39;
+}
+/*----------------------header*/
+/*----------------------共通レイアウト*/
+
+main{
+    color: black;
+    background-blend-mode: luminosity;
+    /*background-color: #7acbe1;*/
+    background-color: #33121a;
+    background-image: url(../../images/index_background_ver2.webp);
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: conver;
+    min-height: 100vh;
+    text-align: center;
+
+}
+main h1{
+    letter-spacing: 0.5rem;
+    font-family: serif;
+    font-size: 3rem;
+    padding-top: 8rem;
+}
+main p{
+    font-weight: bold;
+}
