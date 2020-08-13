@@ -33,4 +33,15 @@ jima884 [@jima884](https://github.com/jima884)
     export FLASK_APP=application.py
     flask run
 ```
+#### WindowsのCMDプロンプトの場合
+```bash
+    set FLASK_APP=application.py
+    flask run
+```
+#### Windowsのパワーシェルの場合
+```bash
+    $env:FLASK_APP = "application.py"
+    flask run
+```
 
+127.0.0.1:5000にアクセスすることで,WEBアプリケーション版を利用できます.
