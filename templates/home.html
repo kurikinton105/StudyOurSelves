@@ -32,6 +32,19 @@
                 </form>
             {% endif %}
 
+        <section>
+                <div class="subtitle">
+                    <h1>ToDoの一覧をここに表示するぜお</h1>
+                </div>
+                <div class="content">
+                    {% for ToDoContent in ToDo %}
+                        <p>{{ToDoContent}}</p>
+                    {% endfor %}
+
+                    <p>文章を入力すると注釈をつけた要約文章を生成します。</p>
+                </div>
+            </section>
+
         </article>
         <footer>
             <div class="member">

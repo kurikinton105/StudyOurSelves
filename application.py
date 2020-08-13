@@ -73,7 +73,6 @@ def do_admin_login():
         flash('パスワードまたは、ユーザー名が違います。')
         return home()
 
-
 @app.route('/protected')
 @flask_login.login_required #ログインが必要だよ
 def protected():
