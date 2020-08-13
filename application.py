@@ -1,11 +1,14 @@
 from flask import Flask, render_template,request #追加
 from flask import Flask
 from flask import Flask,flash,redirect,render_template,request,session,abort
-import flask , flask_login
+import flask ,flask_login
 from api.views.user import user_router
 from flask import Blueprint, request, make_response, jsonify
 import json
+import datetime
 from api.__init__ import api_app
+from code_def import calender_sort
+
 app = Flask(__name__)
 
 #Login処理の試しを作ってみる
@@ -17,7 +20,10 @@ class User(flask_login.UserMixin):
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 
+#SQL実装前の仮データベース
 users = {'example@com': {'password': 'password'}}
+ToDoList = '[{"id": "class1","date":"2020-8-13","info":"期末課題"},{"id": "情報論理学","date":"2020-8-16","info":"猿でもわかる"},{"id": "機械学習","date":"2020-7-30","info":"未踏ジュニア"}]'
+ToDoList_json = json.loads(ToDoList) #Json読み込み
 
 @login_manager.user_loader
 def user_loader(email):
@@ -53,7 +59,10 @@ def home():
        return render_template('index.html')
    else:
        print("ログインなう")
-       return render_template('home.html',id_name=flask_login.current_user.id)
+       #予定データのソート
+       sort_cut_data = calender_sort(ToDoList_json)
+
+       return render_template('home.html',id_name=flask_login.current_user.id, ToDo = sort_cut_data)
 # ------------------------------------------------------------------
 @app.route('/login')
 def showloginpage():
