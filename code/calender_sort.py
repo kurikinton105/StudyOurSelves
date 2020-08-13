@@ -19,6 +19,6 @@ def calender_sort(ToDoList_json):
     return sort_cut_data
 
 #ユーザーのクラス情報を取得する。
-ToDoList = '[{"id": "class1","date":"2020-8-13","info":"期末課題"},{"id": "情報論理学","date":"2020-8-16","info":"猿でもわかる"},{"id": "機械学習","date":"2020-7-30","info":"未踏ジュニア"}]'
-ToDoList_json = json.loads(ToDoList) #Json読み込み
-print(calender_sort(ToDoList_json))
+#ToDoList = '[{"id": "class1","date":"2020-8-13","info":"期末課題"},{"id": "情報論理学","date":"2020-8-16","info":"猿でもわかる"},{"id": "機械学習","date":"2020-7-30","info":"未踏ジュニア"}]'
+#ToDoList_json = json.loads(ToDoList) #Json読み込み
+#print(calender_sort(ToDoList_json))
