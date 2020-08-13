@@ -31,7 +31,7 @@ def user_loader(email):
 
 @login_manager.request_loader
 def request_loader(request):
-    email = request.form.get('username')
+    email = request.form.get('email')
     if email not in users:
         return
 
@@ -55,14 +55,18 @@ def home():
        print("ログインなう")
        return render_template('home.html',id_name=flask_login.current_user.id)
 # ------------------------------------------------------------------
-@app.route('/loginpage')
+@app.route('/login')
 def showloginpage():
-    return render_template('home.html')
+    return render_template('login_ver2.html')
+
+@app.route('/new')
+def newuserpage():
+    return render_template('new.html')
 #database
 
-@app.route('/login', methods=['POST']) #ここでログインのPOSTを行う
+@app.route('/loginpost', methods=['POST']) #ここでログインのPOSTを行う
 def do_admin_login():
-    id_name = flask.request.form['username'] #ユーザーネームの取り出し
+    id_name = flask.request.form['email'] #ユーザーネームの取り出し
     if flask.request.form['password'] == users[id_name]['password']:
         session['logged_in'] = True
         user = User()
