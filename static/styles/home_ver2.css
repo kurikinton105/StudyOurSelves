@@ -1,0 +1,116 @@
+/*共通レイアウト--------------------------*/
+*{
+    text-decoration: none;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/*header---------------------------------*/
+header{
+    align-items: center;
+    background-color: #560d04;
+    display: flex;
+    margin: 0 auto;
+}
+header a{
+    color: #f1eac3;
+}
+
+
+.title{
+    margin-left: 1.5rem;
+}
+.title a{
+    font-family: serif;
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.menus{
+    margin-right: 1.5rem;
+}
+.menus ul{
+    display: flex;
+    list-style: none;
+}
+.menus li{
+    padding: 1rem;
+}
+.menus li a:hover{
+    color: #a6ce39;
+}
+/*----------------------header*/
+/*----------------------共通レイアウト*/
+
+main{
+    color: black;
+    background-blend-mode: luminosity;
+    /*background-color: #7acbe1;*/
+    background-color: #33121a;
+    background-image: url(../images/home_background.webp);
+    background-position: center top;
+    background-repeat: repeat;
+    background-size: conver;
+    display: flex;
+    min-height: 100vh;
+    text-align: left;
+
+}
+
+.list{
+    background-color: rgba(255,255,255,0.8);
+    height: 40vh;
+    margin-top: 1rem;
+    margin-left: 1%;
+    padding: 1rem;
+    width: 27%;
+}
+.list h1{
+    border-bottom: solid 2px black;
+    font-family: serif;
+}
+.list ul{
+    width: 70%;
+}
+.list li{
+    margin: 0.5rem;
+    text-align: left;
+}
+.list a{
+    color: #4a5512;
+}
+.list a:hover{
+    color: red;
+}
+
+.schedules{
+    background-color: rgba(255,255,255,0.8);
+    margin-top: 1rem;
+    margin-right: 1%;
+    padding: 1rem;
+    width: 67%;
+}
+.schedules h1{
+    border-bottom: solid 2px black;
+    font-family: serif;
+    margin-bottom: 1rem;
+}
+
+.event{
+    background-color: rgba(255,255,255,0.1);
+    border: solid 1px gray;
+    margin: 1rem 0rem;
+}
+.date{
+    padding: 0.2rem;
+    font-size: 0.7rem;
+}
+.sub-title a{
+    color: #4a5512;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 2rem;
+}
+.sub-title a:hover{
+    color: red;
+}
