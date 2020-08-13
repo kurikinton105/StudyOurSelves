@@ -1,13 +1,9 @@
---find-links wheelhouse
-azure-cognitiveservices-speech==1.12.1
-janome==0.3.10
 numpy==1.18.3
 click==6.7
 Flask==1.0.2
 itsdangerous==0.24
 Jinja2>=2.10.1
-MarkupSafe
-Werkzeug
-beautifulsoup4==4.9.1
 requests==2.23.0
-
+datetime
+json
+flask_login

@@ -38,7 +38,7 @@
                 </div>
                 <div class="content">
                     {% for ToDoContent in ToDo %}
-                        <p>{{ToDoContent}}</p>
+                        <li>{{ToDoContent['date']}} : {{ToDoContent['id']}}  {{ToDoContent['info']}}</li>
                     {% endfor %}
 
                     <p>文章を入力すると注釈をつけた要約文章を生成します。</p>
