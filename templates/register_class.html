@@ -37,24 +37,14 @@
                 <div class="result">
                     <h2>検索結果</h2>
                     <ul class="classes">
-                        <li class="class">
-                            <p><a href="class.html">授業名1</a></p>
-                            <div class="info">
-                                この授業は、（授業説明）。
-                            </div>
-                        </li>
-                        <li class="class">
-                            <p><a href="class.html">授業名2</a></p>
-                            <div class="info">
-                                この授業は、（授業説明）。
-                            </div>
-                        </li>
-                        <li class="class">
-                            <p><a href="class.html">授業名3</a></p>
-                            <div class="info">
-                                この授業は、（授業説明）。
-                            </div>
-                        </li>
+                        {% for class in classlist %}
+                            <li class="class">
+                                <p><a href="/class/{{class['class']}}">{{class['class']}}</a></p>
+                                <div class="info">
+                                    {{class['info']}}
+                                </div>
+                            </li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>

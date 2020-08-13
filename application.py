@@ -24,7 +24,9 @@ login_manager.init_app(app)
 users = {'example@com': {'password': 'password'}}
 ToDoList = '[{"id": "class1","date":"2020-8-13","info":"期末課題"},{"id": "情報論理学","date":"2020-8-16","info":"猿でもわかる"},{"id": "情報論理学","date":"2020-8-16","info":"猿でもわかるっていうけど誰がわかるねんって感じでめっちゃ怒っているなうなので、なんとかしてほしい。"},{"id": "機械学習","date":"2020-7-30","info":"未踏ジュニア"}]'
 ToDoList_json = json.loads(ToDoList) #Json読み込み
-
+classlist = '[{"class": "class1","info":"期末課題"},{"class": "情報論理学","info":"猿でもわかる"},{"class": "機械学習","info":"猿でもわかる"}]'
+#'[{"class": "class1","info":"初めてのクラスですよー"},{"class": "情報論理学","info":"めっちゃ難しかった"},{"class": "機械学習","info":"タイムトライアルきつかったね"}]'
+classlist_json = json.loads(classlist) #Json読み込み
 
 #----ここからページへのリンクの実装---------
 error_flag = False
@@ -63,7 +65,7 @@ def home():
    else:
        print("ログインなう")
        #予定データのソート
-       sort_cut_data = calender_sort(ToDoList_json)
+       sort_cut_data = calender_sort(ToDoList_json) # ソートはcode_def.py内にて定義
 
        return render_template('home_ver2.html',id_name=flask_login.current_user.id, ToDo = sort_cut_data)
 # ------------------------------------------------------------------
@@ -107,10 +109,17 @@ def protected():
     print(flask_login.current_user.id)
     return render_template('home_ver2.html',id_name=flask_login.current_user.id)
     #return 'Logged in as: ' + flask_login.current_user.id
+
+# -----個々のページの処理コード-----------------------------------------
+# 授業検索のページ
+@app.route('/register_class')
+def register_class():
+    return render_template('register_class.html',classlist = classlist_json)
+
 # classページの動的作成
 @app.route('/class/<classname>')
 def classpage(classname):
-    return render_template("home_ver2.html",id_name=classname)
+    return render_template("home_ver2.html",id_name=classlist_json['class'])
 
 
 # ------------------------------------------------------------------
