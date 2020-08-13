@@ -24,7 +24,7 @@ login_manager.init_app(app)
 users = {'example@com': {'password': 'password'}}
 ToDoList = '[{"id": "class1","date":"2020-8-13","info":"期末課題"},{"id": "情報論理学","date":"2020-8-16","info":"猿でもわかる"},{"id": "情報論理学","date":"2020-8-16","info":"猿でもわかるっていうけど誰がわかるねんって感じでめっちゃ怒っている"},{"id": "機械学習","date":"2020-7-30","info":"未踏ジュニア"}]'
 ToDoList_json = json.loads(ToDoList) #Json読み込み
-
+error_flag = False
 @login_manager.user_loader
 def user_loader(email):
     if email not in users:
@@ -54,8 +54,8 @@ def request_loader(request):
 @app.route('/') #はじめに表示！！
 def home():
    if not session.get('logged_in'): #ログインしていなかったら表示
-       #print("A")
        print("最初のログイン")
+       error_flag = False
        return render_template('index.html')
    else:
        print("ログインなう")
@@ -66,11 +66,14 @@ def home():
 # ------------------------------------------------------------------
 @app.route('/login')
 def showloginpage():
-    return render_template('login_ver2.html')
+    if error_flag == True:
+        message = "ユーザー名がすでに使われているかパスワードが違います"
+    else:
+        message = ""
+    return render_template('login_ver2.html',error_message = message)
 
 @app.route('/new')
 def newuserpage():
-    error_flag = False
     if error_flag == True:
         message = "ユーザー名がすでに使われているかパスワードが違います"
     else:
@@ -87,11 +90,13 @@ def do_admin_login():
         user.id = id_name
         flask_login.login_user(user)
         print("ログインしました。")
+        error_flag = False
         #return home()
         return flask.redirect(flask.url_for('home'))
     else:
         flash('パスワードまたは、ユーザー名が違います。')
-        return home()
+        
+        return showloginpage()
 
 @app.route('/protected')
 @flask_login.login_required #ログインが必要だよ
