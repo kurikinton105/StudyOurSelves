@@ -5,7 +5,7 @@
         <title>StudeyOurSelves</title>
         <meta name="description" content="共有タスク管理するWebアプリケーション">
 
-        <!--CSS----------------------------------------------->
+        <!--CSS-->
         <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
         <link rel="stylesheet" href="../static/styles/register_class.css">
     </head>
@@ -13,13 +13,13 @@
     <body>
         <header>
             <div class="title">
-                <a href="index.html">SOS</a>
+                <a href="/">SOS</a>
             </div>
             <div class="menus">
                 <ul>
                     <!--ユーザー情報編集ページへ-->
-                    <li><a href="edit.html">ユーザー名</a></li>
-                    <li><a href="index.html">ログアウト</a></li>
+                    <li><a href="/edit">ユーザー名</a></li>
+                    <li><a href="/logout">ログアウト</a></li>
                 </ul>
             </div>
         </header>
@@ -37,24 +37,14 @@
                 <div class="result">
                     <h2>検索結果</h2>
                     <ul class="classes">
-                        <li class="class">
-                            <p><a href="class.html">授業名1</a></p>
-                            <div class="info">
-                                この授業は、（授業説明）。
-                            </div>
-                        </li>
-                        <li class="class">
-                            <p><a href="class.html">授業名2</a></p>
-                            <div class="info">
-                                この授業は、（授業説明）。
-                            </div>
-                        </li>
-                        <li class="class">
-                            <p><a href="class.html">授業名3</a></p>
-                            <div class="info">
-                                この授業は、（授業説明）。
-                            </div>
-                        </li>
+                        {% for class in classlist %}
+                            <li class="class">
+                                <p><a href="/class/{{class['class']}}">{{class['class']}}</a></p>
+                                <div class="info">
+                                    {{class['info']}}
+                                </div>
+                            </li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
