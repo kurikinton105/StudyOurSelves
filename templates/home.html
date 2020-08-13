@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>Make Class Easy</title>
+        <meta name="description" content="Make Class Easyは皆さんの学習をサポートします。">
+        <meta name="author" content="Cos5year"/>
+        <meta name="keywords" content="授業","要約","学修支援" />
+        <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+        <link rel="stylesheet" href="http://127.0.0.1:5000/static/styles/make-class-easy.css">
+        <link rel="stylesheet" href="static/styles/make-class-easy.css">
+
+    </head>
+    <body>
+        <header>
+            <h1>Make Class Easy</h1>
+        </header>
+        <article>
+            {% if session['logged_in'] %}
+                <p>You're logged in already!</p><br>
+
+                <p>{{id_name}}でログインしています。</p><br>
+                <p>ここにコンテンツを生成して置いていけばなんかいけそう</p>
+                <a href='/logout'>Logout</a><br/>
+            {% else %}
+                <form action="/login" method="POST">
+                <blockquote>
+                    <input type="username" name="username" placeholder="Username"><br />
+                    <input type="password" name="password" placeholder="Password"><br />
+                </blockquote>
+                <input type="submit" value="Log in">
+                </form>
+            {% endif %}
+
+        </article>
+        <footer>
+            <div class="member">
+                <h2>Cos5year</h2>
+                <p>R.I (<a href="https://github.com/jimar884" target="_blank" style="color:lightgray">@jimar884</a>)</p>
+                <p>yama (<a href="https://github.com/kurikinton105" target="_blank" style="color:lightgray">@kurikinton105</a>)</p>
+                <p>S.N (<a href="https://github.com/tomsoyaN" target="_blank" style="color:lightgray">@	tomsoyaN</a>)</p>
+            </div>
+        </footer>
+    </body>
+
+</html>
