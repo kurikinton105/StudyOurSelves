@@ -1,8 +1,10 @@
 import datetime
 import json
+from difflib import SequenceMatcher
+import numpy as np
 
 #時間の判定をしてまだのものを表示する。
-def calender_sort(ToDoList_json):
+def calender_sort(ToDoList_json): # ソートするjsonデータ（ToDo)
     sort_data = sorted(ToDoList_json, key=lambda x: x["date"]) #ここでソートする。
     today = datetime.date.today()
     showListIndex =[] #最後に表示するインデックス作成
@@ -18,7 +20,24 @@ def calender_sort(ToDoList_json):
         sort_cut_data.append(sort_data[showListIndex[i]])
     return sort_cut_data
 
-#ユーザーのクラス情報を取得する。
-ToDoList = '[{"id": "class1","date":"2020-8-13","info":"期末課題"},{"id": "情報論理学","date":"2020-8-16","info":"猿でもわかる"},{"id": "機械学習","date":"2020-7-30","info":"未踏ジュニア"}]'
-ToDoList_json = json.loads(ToDoList) #Json読み込み
-print(calender_sort(ToDoList_json))
+def search_class(search_text,classlist_json): #search_text:検索語,classlist_json class情報
+    find_class_index =[]
+    s_len = len(search_text)
+    for i in range(len(classlist_json)):
+        trg = classlist_json[i]['class']
+        t_len = len(trg)
+        r = max([SequenceMatcher(None, search_text, trg[i:i+s_len]).ratio() for i in range(t_len-s_len+1)])
+        find_class_index.append(r) #類似度を入れ込む
+
+    find_class_index_np = np.array(find_class_index) #Numpy配列に変換
+    find_class_index_np_index=np.argsort(find_class_index_np) #ソート後のインデックス
+    result_class =[]
+    #リストで表示
+    if len(find_class_index_np_index) >= 10: #10個以上あった時は場合分け
+        for i in range(10):
+            result_class.append(classlist_json[find_class_index_np_index[i]])
+    else:
+        for i in range(len(find_class_index_np_index)):
+            result_class.append(classlist_json[find_class_index_np_index[i]])
+
+    return result_class
