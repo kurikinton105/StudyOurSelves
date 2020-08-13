@@ -68,6 +68,8 @@ def home():
        sort_cut_data = calender_sort(ToDoList_json) # ソートはcode_def.py内にて定義
 
        return render_template('home_ver2.html',id_name=flask_login.current_user.id, ToDo = sort_cut_data,classlist_user = classlist_user)
+
+
 # ------------------------------------------------------------------
 @app.route('/login')
 def showloginpage():
@@ -118,6 +120,7 @@ def register_class():
 
 # classページの動的作成
 @app.route('/class/<classname>')
+@flask_login.login_required
 def classpage(classname):
     return render_template("home_ver2.html")
 
@@ -131,6 +134,7 @@ def logout():
 
 # ------------------------------------------------------------------
 @app.route('/api', methods=['GET'])
+@flask_login.login_required
 def doc():
     return "<H1>ここにドキュメント</H1>"
 
