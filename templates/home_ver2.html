@@ -33,10 +33,9 @@
                 </ul>
                 <h1>Classes</h1>
                 <ul>
-                    <li><a href="class.html">class1</a></li>
-                    <li><a href="class.html">class2</a></li>
-                    <li><a href="class.html">class3</a></li>
-                    <li><a href="class.html">class4</a></li>
+                    {% for class_user in classlist_user %}
+                        <li><a href="/class/{{class_user}}">{{class_user}}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
             <div class="schedules">

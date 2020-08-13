@@ -22,10 +22,10 @@ login_manager.init_app(app)
 
 #SQL実装前の仮データベース
 users = {'example@com': {'password': 'password'}}
+classlist_user = ['class1','機械学習','情報論理学'] #本当はusersの中にSQLで格納してほしい
 ToDoList = '[{"id": "class1","date":"2020-8-13","info":"期末課題"},{"id": "情報論理学","date":"2020-8-16","info":"猿でもわかる"},{"id": "情報論理学","date":"2020-8-16","info":"猿でもわかるっていうけど誰がわかるねんって感じでめっちゃ怒っているなうなので、なんとかしてほしい。"},{"id": "機械学習","date":"2020-7-30","info":"未踏ジュニア"}]'
 ToDoList_json = json.loads(ToDoList) #Json読み込み
 classlist = '[{"class": "class1","info":"期末課題"},{"class": "情報論理学","info":"猿でもわかる"},{"class": "機械学習","info":"猿でもわかる"}]'
-#'[{"class": "class1","info":"初めてのクラスですよー"},{"class": "情報論理学","info":"めっちゃ難しかった"},{"class": "機械学習","info":"タイムトライアルきつかったね"}]'
 classlist_json = json.loads(classlist) #Json読み込み
 
 #----ここからページへのリンクの実装---------
@@ -67,7 +67,7 @@ def home():
        #予定データのソート
        sort_cut_data = calender_sort(ToDoList_json) # ソートはcode_def.py内にて定義
 
-       return render_template('home_ver2.html',id_name=flask_login.current_user.id, ToDo = sort_cut_data)
+       return render_template('home_ver2.html',id_name=flask_login.current_user.id, ToDo = sort_cut_data,classlist_user = classlist_user)
 # ------------------------------------------------------------------
 @app.route('/login')
 def showloginpage():
@@ -119,8 +119,7 @@ def register_class():
 # classページの動的作成
 @app.route('/class/<classname>')
 def classpage(classname):
-    return render_template("home_ver2.html",id_name=classlist_json['class'])
-
+    return render_template("home_ver2.html")
 
 # ------------------------------------------------------------------
 @app.route("/logout")
