@@ -50,12 +50,14 @@ def home():
    if not session.get('logged_in'): #ログインしていなかったら表示
        #print("A")
        print("最初のログイン")
-       return render_template('login.html')
+       return render_template('index.html')
    else:
        print("ログインなう")
        return render_template('home.html',id_name=flask_login.current_user.id)
 # ------------------------------------------------------------------
-
+@app.route('/loginpage')
+def showloginpage():
+    return render_template('home.html')
 #database
 
 @app.route('/login', methods=['POST']) #ここでログインのPOSTを行う
