@@ -47,7 +47,7 @@ main{
     background-blend-mode: luminosity;
     /*background-color: #7acbe1;*/
     background-color: #33121a;
-    background-image: url(../images/home_background.webp);
+    background-image: url(../images/home_background.jpg);
     background-position: center top;
     background-repeat: repeat;
     background-size: conver;
