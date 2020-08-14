@@ -1,0 +1,131 @@
+/*共通レイアウト--------------------------*/
+*{
+    text-decoration: none;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/*header---------------------------------*/
+header{
+    align-items: center;
+    background-color: #560d04;
+    display: flex;
+    margin: 0 auto;
+}
+header a{
+    color: #f1eac3;
+}
+
+
+.title{
+    margin-left: 1.5rem;
+}
+.title a{
+    font-family: serif;
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.menus{
+    margin-right: 1.5rem;
+}
+.menus ul{
+    display: flex;
+    list-style: none;
+}
+.menus li{
+    padding: 1rem;
+}
+.menus li a:hover{
+    color: #a6ce39;
+}
+/*----------------------header*/
+/*----------------------共通レイアウト*/
+
+main{
+    color: black;
+    background-blend-mode: luminosity;
+    /*background-color: #7acbe1;*/
+    background-color: #33121a;
+    background-image: url(../images/home_background.webp);
+    background-position: center top;
+    background-repeat: repeat;
+    background-size: conver;
+    display: flex;
+    min-height: 100vh;
+    text-align: left;
+
+}
+
+textarea{
+    background-color: rgba(15,15,15,0.2);
+    border-radius: 3px;
+    margin-left: 1rem;
+    min-height: 4rem;
+    padding: 0.2rem 0.5rem;
+    width: 80%;
+}
+
+.long{
+    min-height: 7rem;
+}
+
+select{
+    border: solid 1px black;
+    cursor: pointer;
+    margin-left: 1rem;
+    overflow: hidden;
+    padding: 0.2rem 0.5rem;
+    text-overflow: ellipsis;
+    width: 8rem;
+    white-space: nowrap;
+}
+
+.register-question{
+    background-color: rgba(255,255,255,0.9);
+    border-radius: 1rem;
+    margin-top: 2rem;
+    width: 70%;
+}
+
+.class-name{
+    font-family: serif;
+    margin: 1.5rem 0rem;
+    text-align: center;
+}
+
+.question{
+    margin: 1rem 2rem;
+}
+.question h2{
+    margin-top: 2rem;
+}
+
+.choice{
+    margin-bottom: 1rem;
+}
+
+
+.button{
+    display: flex;
+    justify-content: center;
+}
+
+.button{
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.button input[type="submit"]{
+    background-color: #dddddd;
+    border-radius: 4rem;
+    border-style: solid;
+    border-width: 0.1rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0.3rem 0.5rem;
+}
+.button input[type="submit"]:hover{
+    background-color: rgba(204,0,0,0.4);
+}
