@@ -50,7 +50,7 @@ def hash_password(password_input,database_pass,bcrypt): #入力パスワード,�
     else:
         print("ハッシュによる認証に失敗")
     return bcrypt.check_password_hash(database_pass,password_input)
-
+"""
 bcrypt = Bcrypt()
 password_data = bcrypt.generate_password_hash('password').decode('utf-8')
 password ="password"
@@ -59,3 +59,4 @@ password_hash = "$2b$12$Ry.bwY9XE3mcWHpMO3mgtu.Xq6MNuB/a3FkrqqfDg6Uyf87omE28W"
 result = hash_password(password,password_hash,bcrypt)
 
 print(result)
+"""
