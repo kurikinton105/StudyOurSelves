@@ -4,13 +4,14 @@ from flask import Flask,flash,redirect,render_template,request,session,abort
 import flask ,flask_login
 from api.views.user import user_router
 from flask import Blueprint, request, make_response, jsonify
+from flask_bcrypt import Bcrypt
 import json
 import datetime
 from api.__init__ import api_app
-from code_def import calender_sort,search_class
+from code_def import calender_sort,search_class,hash_password
 
 app = Flask(__name__)
-
+bcrypt = Bcrypt() #ハッシュのやつ
 #Login処理の試しを作ってみる
 app.secret_key = 'hogehoge'
 
@@ -21,10 +22,15 @@ login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 
 #SQL実装前の仮データベース
-users = {'example@com': {'password': 'password'}}
-classlist_user = ['class1','機械学習','情報論理学'] #本当はusersの中にSQLで格納してほしい
+#password = password_data = bcrypt.generate_password_hash('password').decode('utf-8')
+#users = {'example@com': {'password': password}} #パスワード
+password = "$2b$12$q.n/uI24z9zStg8tritvU.u4Vn6UkYkHDxwpz8Xt3OvMajIuvSBKi"
+users = {'example@com': {'password': password}} #パスワード (@tom:取っている授業情報を入れるべきかもしれない by kuri)
+classlist_user = ['class1','機械学習','情報論理学'] #本当はusersの中にSQLで格納してほしい(これを入れ込む感じリンク構造でもいい)
+# 取っている授業のToDoリストの全ての一覧をデータ型としてプログラムに持ってくる
 ToDoList = '[{"id": "class1","date":"2020-8-13","info":"期末課題"},{"id": "情報論理学","date":"2020-8-16","info":"猿でもわかる"},{"id": "情報論理学","date":"2020-8-16","info":"猿でもわかるっていうけど誰がわかるねんって感じでめっちゃ怒っているなうなので、なんとかしてほしい。"},{"id": "機械学習","date":"2020-7-30","info":"未踏ジュニア"}]'
 ToDoList_json = json.loads(ToDoList) #Json読み込み
+# 全体のクラスの一覧（検索とかで使う）
 classlist = '[{"class": "class1","info":"期末課題"},{"class": "情報論理学","info":"猿でもわかる"},{"class": "機械学習","info":"猿でもわかる"}]'
 classlist_json = json.loads(classlist) #Json読み込み
 
@@ -39,7 +45,7 @@ def user_loader(email):
     user = User()
     user.id = email
     return user
-
+"""
 @login_manager.request_loader
 def request_loader(request):
     email = request.form.get('email')
@@ -54,7 +60,7 @@ def request_loader(request):
     user.is_authenticated = request.form['password'] == users[email]['password']
 
     return user
-
+"""
 # ------------------------------------------------------------------
 @app.route('/') #はじめに表示！！
 def home():
@@ -77,6 +83,7 @@ def showloginpage():
         message = "ユーザー名がすでに使われているかパスワードが違います"
     else:
         message = ""
+
     return render_template('login_ver2.html',error_message = message)
 
 @app.route('/new')
@@ -91,18 +98,24 @@ def newuserpage():
 @app.route('/loginpost', methods=['POST']) #ここでログインのPOSTを行う
 def do_admin_login():
     id_name = flask.request.form['email'] #ユーザーネームの取り出し
-    if flask.request.form['password'] == users[id_name]['password']:
-        session['logged_in'] = True
-        user = User()
-        user.id = id_name
-        flask_login.login_user(user)
-        print("ログインしました。")
-        error_flag = False
-        #return home()
-        return flask.redirect(flask.url_for('home'))
-    else:
+    try:
+        if hash_password(flask.request.form['password'],users[id_name]['password'],bcrypt) == 1:
+        #if flask.request.form['password'] == users[id_name]['password']:
+            session['logged_in'] = True
+            user = User()
+            user.id = id_name
+            flask_login.login_user(user)
+            print("ログインしました。")
+            error_flag = False
+            #return home()
+            return flask.redirect(flask.url_for('home'))
+        else:
+            flash('パスワードまたは、ユーザー名が違います。')
+            error_flag=False
+            return showloginpage()
+    except:
         flash('パスワードまたは、ユーザー名が違います。')
-
+        error_flag=False
         return showloginpage()
 
 @app.route('/protected')
@@ -123,7 +136,7 @@ def register_class():
 def searching():
     search_text = flask.request.form['searching'] #searchボックスの中身を取得
     print(search_text)
-    search_json = search_class(search_text,classlist_json)
+    search_json = search_class(search_text,classlist_json) #code_def内の関数でサーチ機能を実装
     #search_json2 = json.loads(search_json)
     return render_template('register_class.html',classlist = search_json)
 
@@ -132,7 +145,40 @@ def searching():
 @app.route('/class/<classname>')
 @flask_login.login_required
 def classpage(classname):
-    return render_template("home_ver2.html")
+    #データベースからclassnameを検索
+    for i in range(len(classlist_json)):
+        if classlist_json[i]['class'] == classname:
+            info_class = classlist_json[i]['info']
+
+    return render_template("class.html",classname = classname,info_class=info_class)
+
+# edit
+@app.route('/edit')
+def edit_user():
+
+    return render_template("class.html")
+
+@app.route('/edit/passwordchange', methods=['POST']) #ここで、データベースの変更のポストを送る
+def edit_userpassword():
+    try:
+        print("ここでデータベース操作")
+        flash("パスワードの変更が完了しました。")
+        return render_template("home.html")
+    except:
+        flash("エラーが発生しました。もう一度やり直してくだいさい")
+        return render_template("class.html")
+
+
+
+# 予定追加
+
+
+
+
+#question
+
+
+
 
 # ------------------------------------------------------------------
 @app.route("/logout")
