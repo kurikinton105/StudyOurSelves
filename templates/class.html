@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>StudeyOurSelves</title>
+        <meta name="description" content="共有タスク管理するWebアプリケーション">
+
+        <!--CSS----------------------------------------------->
+        <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+        <link rel="stylesheet" href="../static/styles/class.css">
+    </head>
+
+    <body>
+        <header>
+            <div class="title">
+                <a href="index.html">SOS</a>
+            </div>
+            <div class="menus">
+                <ul>
+                    <!--ユーザー情報編集ページへ-->
+                    <li><a href="edit.html">ユーザー名</a></li>
+                    <li><a href="index.html">ログアウト</a></li>
+                </ul>
+            </div>
+        </header>
+        <main>
+            <div class="class">
+                <div class="title">
+                    <h1>授業名</h1>
+                    <form action="" method="" name="">
+                        <input type="submit" value="登録">
+                        <input type="submit" value="解除">
+                    </form>
+                </div>
+                <section>
+                    <div class="sub-title">
+                        <h2>授業概要</h2>
+                    </div>
+                    <div class="content">
+                        <p>この授業は、（授業説明）。</p>
+                    </div>
+                </section>
+                <section>
+                    <div class="sub-title">
+                        <h2>授業スケジュール</h2>
+                    </div>
+                    <div class="content">
+                        <div class="event">
+                            <div class="date">2020-8-15</div>
+                            <div class="event-name">
+                                <h3>イベント名</h3>
+                            </div>
+                        </div>
+                        <div class="event">
+                            <div class="date">2020-8-15</div>
+                            <div class="event-name">
+                                <h3>イベント名</h3>
+                            </div>
+                        </div>
+                        <div class="event">
+                            <div class="date">2020-8-15</div>
+                            <div class="event-name">
+                                <h3>イベント名</h3>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="sub-title">
+                        <h2>演習問題</h2>
+                    </div>
+                    <div class="content">
+                        <div class="make-q-set">
+                            <form action="" method="" name="">
+                                <input type="text" placeholder="作成したい問題セット名">
+                                <input type="submit" value="作成">
+                            </form>
+                        </div>
+                        <ul class="q-sets">
+                            <li class="q-set">
+                                <div class="q-title">
+                                    <a class="q-title" href="question.html">中間対策</a>
+                                </div>
+                                <div class="button">
+                                    <a class="button" href="question.html">解く</a>
+                                    <a class="button" href="register-question">問題追加</a>
+                                </div>
+                            </li>
+                            <li class="q-set">
+                                <div class="q-title">
+                                    <a class="q-title" href="question.html">期末対策</a>
+                                </div>
+                                <div class="button">
+                                    <a class="button" href="question.html">解く</a>
+                                    <a class="button" href="register-question">問題追加</a>
+                                </div>
+                            </li>
+                            <li class="q-set">
+                                <div class="q-title">
+                                    <a class="q-title" href="question.html">レポート対策</a>
+                                </div>
+                                <div class="button">
+                                    <a class="button" href="question.html">解く</a>
+                                    <a class="button" href="register-question">問題追加</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </body>
+</html>

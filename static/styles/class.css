@@ -1,0 +1,172 @@
+/*共通レイアウト--------------------------*/
+*{
+    text-decoration: none;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/*header---------------------------------*/
+header{
+    align-items: center;
+    background-color: #560d04;
+    display: flex;
+    margin: 0 auto;
+}
+header a{
+    color: #f1eac3;
+}
+
+
+.title{
+    margin-left: 1.5rem;
+}
+.title a{
+    font-family: serif;
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.menus{
+    margin-right: 1.5rem;
+}
+.menus ul{
+    display: flex;
+    list-style: none;
+}
+.menus li{
+    padding: 1rem;
+}
+.menus li a:hover{
+    color: #a6ce39;
+}
+/*----------------------header*/
+/*----------------------共通レイアウト*/
+
+main{
+    color: black;
+    background-blend-mode: luminosity;
+    /*background-color: #7acbe1;*/
+    background-color: #33121a;
+    background-image: url(../images/home_background.webp);
+    background-position: center top;
+    background-repeat: repeat;
+    background-size: conver;
+    display: flex;
+    min-height: 100vh;
+    text-align: left;
+
+}
+
+.class{
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 1rem;
+    margin-top: 2rem;
+    width: 70%;
+}
+
+.title{
+    margin: 2rem;
+}
+.title h1{
+    font-family: serif;
+    font-size: 2rem;
+    text-align: center;
+}
+.title form{
+    text-align: right;
+}
+.title input[type="submit"]{
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    padding: 0.1rem 0.5rem;
+}
+.title input[type="submit"]:hover{
+    background-color: rgba(204,0,0,0.4);
+}
+
+section{
+    margin: 2rem;
+}
+
+.sub-title{
+    border-bottom: solid 2px black;
+}
+
+.event{
+    background-color: rgba(255,255,255,0.4);
+    border: solid 1px grey;
+    margin: 0.5rem 0.5rem;
+}
+
+.date{
+    padding: 0.2rem;
+    font-size: 0.7rem;
+}
+
+.event-name h3{
+    font-size: 1.2rem;
+    margin-left: 0.5rem;
+    margin-right: 0.3rem;
+}
+
+.make-q-set{
+    display: flex;
+    justify-content: space-between;
+    margin: 0.3rem;
+}
+.make-q-set input[type="text"]{
+    background-color: rgba(15,15,15,0.2);
+    padding: 0.2rem;
+}
+.make-q-set input[type="submit"]{
+    border: solid 1px black;
+    color: black;
+    border: solid 1px grey;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    padding: 0.1rem 0.2rem;
+    text-align: right;
+}
+.make-q-set input[type="submit"]:hover{
+    background-color: rgba(204,0,0,0.4);
+}
+
+.q-sets{
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
+
+.q-set{
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.q-title{
+    margin: 0.2rem;
+}
+.q-title a{
+    color: #4a5512;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 0.1rem 0.2rem;
+}
+.q-title a:hover{
+    color: red;
+}
+
+.button{
+    margin: 0.2rem;
+}
+.button a{
+    color: black;
+    border: solid 1px grey;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    padding: 0.1rem 0.2rem;
+    text-align: right;
+}
+.button a:hover{
+    background-color: rgba(204,0,0,0.4);
+}
