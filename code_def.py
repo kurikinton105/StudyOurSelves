@@ -2,7 +2,7 @@ import datetime
 import json
 from difflib import SequenceMatcher
 import numpy as np
-
+from flask_bcrypt import Bcrypt
 #時間の判定をしてまだのものを表示する。
 def calender_sort(ToDoList_json): # ソートするjsonデータ（ToDo)
     sort_data = sorted(ToDoList_json, key=lambda x: x["date"]) #ここでソートする。
@@ -20,6 +20,7 @@ def calender_sort(ToDoList_json): # ソートするjsonデータ（ToDo)
         sort_cut_data.append(sort_data[showListIndex[i]])
     return sort_cut_data
 
+#サーチの機能
 def search_class(search_text,classlist_json): #search_text:検索語,classlist_json class情報
     find_class_index =[]
     s_len = len(search_text)
@@ -40,3 +41,21 @@ def search_class(search_text,classlist_json): #search_text:検索語,classlist_j
         for i in range(len(find_class_index_np_index)):
             result_class.append(classlist_json[find_class_index_np_index[i]])
     return result_class
+
+#ハッシュでのパスワード認証の実装
+def hash_password(password_input,database_pass,bcrypt): #入力パスワード,でエータベースのハッシュ値
+    #bcrypt = Bcrypt()
+    if bcrypt.check_password_hash(database_pass,password_input) == 1:
+        print("ハッシュによる認証ができました。")
+    else:
+        print("ハッシュによる認証に失敗")
+    return bcrypt.check_password_hash(database_pass,password_input)
+
+bcrypt = Bcrypt()
+password_data = bcrypt.generate_password_hash('password').decode('utf-8')
+password ="password"
+print(password_data)
+password_hash = "$2b$12$Ry.bwY9XE3mcWHpMO3mgtu.Xq6MNuB/a3FkrqqfDg6Uyf87omE28W"
+result = hash_password(password,password_hash,bcrypt)
+
+print(result)
