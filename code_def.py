@@ -47,9 +47,10 @@ def hash_password(password_input,database_pass,bcrypt): #入力パスワード,�
     #bcrypt = Bcrypt()
     if bcrypt.check_password_hash(database_pass,password_input) == 1:
         print("ハッシュによる認証ができました。")
+        return True
     else:
         print("ハッシュによる認証に失敗")
-    return bcrypt.check_password_hash(database_pass,password_input)
+        return False
 """
 bcrypt = Bcrypt()
 password_data = bcrypt.generate_password_hash('password').decode('utf-8')
