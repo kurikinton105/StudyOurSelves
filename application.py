@@ -21,7 +21,7 @@ login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 
 #SQL実装前の仮データベース
-users = {'example@com': {'password': 'password'}}
+users = {'example@com': {'password': 'password'}} #パスワード
 classlist_user = ['class1','機械学習','情報論理学'] #本当はusersの中にSQLで格納してほしい
 ToDoList = '[{"id": "class1","date":"2020-8-13","info":"期末課題"},{"id": "情報論理学","date":"2020-8-16","info":"猿でもわかる"},{"id": "情報論理学","date":"2020-8-16","info":"猿でもわかるっていうけど誰がわかるねんって感じでめっちゃ怒っているなうなので、なんとかしてほしい。"},{"id": "機械学習","date":"2020-7-30","info":"未踏ジュニア"}]'
 ToDoList_json = json.loads(ToDoList) #Json読み込み
@@ -123,7 +123,7 @@ def register_class():
 def searching():
     search_text = flask.request.form['searching'] #searchボックスの中身を取得
     print(search_text)
-    search_json = search_class(search_text,classlist_json)
+    search_json = search_class(search_text,classlist_json) #code_def内の関数でサーチ機能を実装
     #search_json2 = json.loads(search_json)
     return render_template('register_class.html',classlist = search_json)
 
@@ -132,7 +132,40 @@ def searching():
 @app.route('/class/<classname>')
 @flask_login.login_required
 def classpage(classname):
-    return render_template("home_ver2.html")
+    #データベースからclassnameを検索
+    for i in range(len(classlist_json)):
+        if classlist_json[i]['class'] == classname:
+            info_class = classlist_json[i]['info']
+
+    return render_template("class.html",classname = classname,info_class=info_class)
+
+# edit
+@app.route('/edit')
+def edit_user():
+
+    return render_template("class.html")
+
+@app.route('/edit/passwordchange', methods=['POST']) #ここで、データベースの変更のポストを送る
+def edit_userpassword():
+    try:
+        print("ここでデータベース操作")
+        flash("パスワードの変更が完了しました。")
+        return render_template("home.html")
+    except:
+        flash("エラーが発生しました。もう一度やり直してくだいさい")
+        return render_template("class.html")
+
+
+
+# 予定追加
+
+
+
+
+#question
+
+
+
 
 # ------------------------------------------------------------------
 @app.route("/logout")
