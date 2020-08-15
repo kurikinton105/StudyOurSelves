@@ -21,7 +21,7 @@ jima884 [@jima884](https://github.com/jima884)
 ```
 を実行する  
 
-1. Azureなどを使いSQLサーバにて必要な情報を取得する。
+2. Azureなどを使いSQLサーバにて必要な情報を取得する。
 
 詳しくはconfig.py内を参照
 
