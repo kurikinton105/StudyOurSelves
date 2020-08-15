@@ -47,7 +47,7 @@ main{
     background-blend-mode: luminosity;
     /*background-color: #7acbe1;*/
     background-color: #33121a;
-    background-image: url(../images/home_background.jpg);
+    background-image: url(../images/home_background.webp);
     background-position: center top;
     background-repeat: repeat;
     background-size: conver;
@@ -81,17 +81,18 @@ select{
     white-space: nowrap;
 }
 
-.register-question{
+.edit-question{
     background-color: rgba(255,255,255,0.9);
     border-radius: 1rem;
     margin-top: 2rem;
+    margin-bottom: 2rem;
     width: 70%;
 }
 
 .class-name{
     font-family: serif;
     margin-top: 1.5rem;
-    marign-bottom: 1rem;
+    margin-bottom: 1rem;
     text-align: center;
 }
 .mode{

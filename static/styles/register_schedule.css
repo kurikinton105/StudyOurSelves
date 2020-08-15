@@ -1,0 +1,148 @@
+/*共通レイアウト--------------------------*/
+*{
+    text-decoration: none;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/*header---------------------------------*/
+header{
+    align-items: center;
+    background-color: #560d04;
+    display: flex;
+    margin: 0 auto;
+}
+header a{
+    color: #f1eac3;
+}
+
+
+.title{
+    margin-left: 1.5rem;
+}
+.title a{
+    font-family: serif;
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.menus{
+    margin-right: 1.5rem;
+}
+.menus ul{
+    display: flex;
+    list-style: none;
+}
+.menus li{
+    padding: 1rem;
+}
+.menus li a:hover{
+    color: #a6ce39;
+}
+/*----------------------header*/
+/*----------------------共通レイアウト*/
+
+main{
+    color: black;
+    background-blend-mode: luminosity;
+    /*background-color: #7acbe1;*/
+    background-color: #33121a;
+    background-image: url(../images/home_background.webp);
+    background-position: center top;
+    background-repeat: repeat;
+    background-size: conver;
+    display: flex;
+    min-height: 100vh;
+    text-align: left;
+
+}
+
+.register_schedule{
+    background-color: rgba(255,255,255,0.9);
+    border-radius: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    width: 70%;
+}
+.register_schedule h1{
+    font-family: serif;
+    margin: 2rem 0rem;
+    text-align: center;
+}
+
+form{
+    text-align: center;
+}
+select{
+    cursor: pointer;
+    background-color: rgba(15,15,15,0.2);
+    border: solid 1px black;
+    padding: 0.2rem 0.5rem;
+    max-width: 25rem;
+    width: 70%;
+}
+
+.event-name{
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    max-width: 30rem;
+    padding: 0.2rem 0.5rem;
+    width: 70%;
+}
+.event-name input[type="text"]{
+    background-color: rgba(15,15,15,0.2);
+    max-width: 30rem;
+    padding: 0.2rem 0.5rem;
+    width: 80%;
+    text-align: center;
+}
+
+.date{
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    max-width: 30rem;
+    padding: 0.2rem 0.5rem;
+    width: 70%;
+}
+.date input[type="text"]{
+    background-color: rgba(15,15,15,0.2);
+    max-width: 30rem;
+    padding: 0.2rem 0.5rem;
+    text-align: center;
+    width: 80%;
+}
+
+.info{
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    max-width: 30rem;
+    padding: 0.2rem 0.5rem;
+    width: 70%;
+}
+.info textarea{
+    background-color: rgba(15,15,15,0.2);
+    min-height: 8rem;
+    max-width: 30rem;
+    padding: 0.2rem 0.5rem;
+    text-align: left;
+    width: 80%;
+}
+
+.button{
+    text-align: right;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    max-width: 30rem;
+}
+.button a{
+    color: black;
+    display: inline-block;
+    border: solid 1px black;
+    border-radius: 3px;
+    padding: 0.2rem 0.5rem;
+}
+.button a:hover{
+    background-color: rgba(204,0,0,0.2);
+}

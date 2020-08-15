@@ -7,7 +7,7 @@
 
         <!--CSS----------------------------------------------->
         <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
-        <link rel="stylesheet" href="../static/styles/register_question.css">
+        <link rel="stylesheet" href="../../static/styles/register_question.css">
     </head>
 
     <body>
@@ -25,30 +25,33 @@
         </header>
         <main>
             <div class="register-question">
-                <h1 class="class-name">授業名</h1>
+
+                <h1 class="class-name">{{class_name}}</h1>
+                <h2 class="mode">問題追加</h2>
+
                 <div class="question">
-                    <form action="" method="" name="">
+                    <form action="/class/{{class_name}}/register_question_post?set={{ request.args.get('set') }}" method="POST">
                         <h2>問題文</h2>
-                        <textarea class="long" placeholder="問題文を書いてください"></textarea>
+                        <textarea name = "question" class="long" placeholder="問題文を書いてください"></textarea>
                         <h2>選択肢</h2>
                         <div class="choice">
                             <p>1</p>
-                            <textarea placeholder="選択肢を書いてください"></textarea>
+                            <textarea name="selection1" placeholder="選択肢を書いてください"></textarea>
                         </div>
                         <div class="choice">
                             <p>2</p>
-                            <textarea></textarea>
+                            <textarea name="selection2"></textarea>
                         </div>
                         <div class="choice">
                             <p>3</p>
-                            <textarea></textarea>
+                            <textarea name="selection3"></textarea>
                         </div>
                         <div class="choice">
                             <p>4</p>
-                            <textarea></textarea>
+                            <textarea name="selection4"></textarea>
                         </div>
                         <h2>答え</h2>
-                        <select>
+                        <select name ="answer">
                             <!--番号は選択肢の文と対応させておくれ。-->
                             <option value="" hidden>答えを選択</option>
                             <option value="1">1</option>

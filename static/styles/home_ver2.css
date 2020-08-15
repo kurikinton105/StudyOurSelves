@@ -100,11 +100,18 @@ main{
     background-color: rgba(255,255,255,0.1);
     border: solid 1px gray;
     margin: 1rem 0rem;
+    postion: relative;
 }
+.event:hover .info{
+    position: static;
+    visibility: visible;
+}
+
 .date{
     padding: 0.2rem;
     font-size: 0.7rem;
 }
+
 .sub-title a{
     color: #4a5512;
     font-size: 1.5rem;
@@ -113,4 +120,13 @@ main{
 }
 .sub-title a:hover{
     color: red;
+}
+
+.info{
+    padding-left: 3rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    position: absolute;
+    visibility: hidden;
 }

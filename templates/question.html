@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>StudeyOurSelves</title>
+        <meta name="description" content="共有タスク管理するWebアプリケーション">
+
+        <!--CSS----------------------------------------------->
+        <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+        <link rel="stylesheet" href="../../static/styles/question.css">
+    </head>
+
+    <body>
+        <header>
+            <div class="title">
+                <a href="index.html">SOS</a>
+            </div>
+            <div class="menus">
+                <ul>
+                    <!--ユーザー情報編集ページへ-->
+                    <li><a href="home_ver2.html">ユーザー名</a></li>
+                    <li><a href="index.html">ログアウト</a></li>
+                </ul>
+            </div>
+        </header>
+        <main>
+            <div class="question">
+                <div class="class-name">
+                    <h1>{{classname}}</h1>
+                    <h2>演習問題</h2>
+                </div>
+                <div class="problem-statement">
+                    <h2>問</h2>
+                    <p>
+                        {{ProblemText}}
+                    </p>
+                </div>
+                <form action="" method="" name="">
+                    <div class="choice">
+                        <h2>回答</h2>
+                        <table>
+                            <tr>
+                                <th>1</th>
+                                <th>
+                                    <input type="radio" name="answer" value="1" id="1">
+                                </th>
+                                <td>
+                                    <label for="1">
+                                        <p>
+                                            {{selection[0]}}
+                                        </p>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>2</th>
+                                <th>
+                                    <input type="radio" name="answer" value="1" id="2">
+                                </th>
+                                <td>
+                                    <label for="2">
+                                        <p>
+                                            {{selection[1]}}
+                                        </p>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>3</th>
+                                <th>
+                                    <input type="radio" name="answer" value="1" id="3">
+                                </th>
+                                <td>
+                                    <label for="3">
+                                        <p>
+                                            {{selection[3]}}
+                                        </p>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>4</th>
+                                <th>
+                                    <input type="radio" name="answer" value="1" id="4">
+                                </th>
+                                <td>
+                                    <label for="4">
+                                        <p>{{selection[4]}}</p>
+                                    </label>
+                                </td>
+                            </tr>
+                            
+                        </table>
+                    </div>
+                    <div class="button">
+                        <a href="/class/{{classname}}">中止</a>
+                        {% if n > 1%}
+                            <a href="/class/{{classname}}/question?set={{setId}}&to=1&n={{n-1}}">前の問題へ</a>
+                        {% endif %}
+                        {% if n < max %}
+                            <a href="/class/{{classname}}/question?set={{setId}}&to=1&n={{n+1}}">次の問題へ</a>
+                        {% endif %}
+                        <input type="submit" value="決定">
+                    </div>
+                </form>
+            </div>
+        </main>
+    </body>
+</html>

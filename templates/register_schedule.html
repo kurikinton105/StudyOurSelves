@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>StudeyOurSelves</title>
+        <meta name="description" content="共有タスク管理するWebアプリケーション">
+
+        <!--CSS-->
+        <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+        <link rel="stylesheet" href="../static/styles/register_schedule.css">
+    </head>
+
+    <body>
+        <header>
+            <div class="title">
+                <a href="/">SOS</a>
+            </div>
+            <div class="menus">
+                <ul>
+                    <!--ユーザー情報編集ページへ-->
+                    <li><a href="/">ユーザー名</a></li>
+                    <li><a href="/logout">ログアウト</a></li>
+                </ul>
+            </div>
+        </header>
+        <main>
+            <div class="register_schedule">
+                <h1>予定追加</h1>
+                <div>
+                    <form action="/add_event_post" method="POST"
+                        <select name="">
+                            <option value="" hidden>授業を選択して下さい</option>
+                            {% for class in class_list_RS %}
+                                <option value="">{{class}}</option>
+                            {%endfor%}
+                        </select>
+                        <div class="event-name">
+                            <p>イベント名:</p>
+                            <input type="text" placeholder="例:期末テスト">
+                        </div>
+                        <div class="date">
+                            <p>予定日:</p>
+                            <input type="text" placeholder="例:2020/8/16">
+                        </div>
+                        <div class="info">
+                            <p>内容:</p>
+                            <textarea placeholder="イベントの詳細"></textarea>
+                        </div>
+                        <div class="button">
+                            <a href="/">中止</a>
+                            <a href="/add_event_post">追加</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

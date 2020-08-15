@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>StudeyOurSelves</title>
+        <meta name="description" content="共有タスク管理するWebアプリケーション">
+
+        <!--CSS-->
+        <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+        <link rel="stylesheet" href="../static/styles/make_class.css">
+    </head>
+
+    <body>
+        <header>
+            <div class="title">
+                <a href="/">SOS</a>
+            </div>
+            <div class="menus">
+                <ul>
+                    <!--ユーザー情報編集ページへ-->
+                    <li><a href="/">ユーザー名</a></li>
+                    <li><a href="/logout">ログアウト</a></li>
+                </ul>
+            </div>
+        </header>
+        <main>
+            <div class="make-class">
+                <h1>新規授業作成</h1>
+                <div>
+                    <form action="make_class_post" method="POST">
+                        <div class="class-name">
+                            <p>授業名:</p>
+                            <input type="text" id="class_name" name="class_name" placeholder="例:機械学習入門">
+                        </div>
+                        <div class="info">
+                            <p>概要:</p>
+                            <textarea id="class_info" name="class_info" placeholder="授業の概要"></textarea>
+                        </div>
+                        <div class="button">
+                            <a href="home_ver2.html">中止</a>
+                            <input type="submit" value="作成">
+                            <!--修正前のやつ↓
+                                <a href="/">中止</a>
+                                <!--<a href="/make_class_post">作成</a>-->
+                                <input type="submit" class="button" value="作成">
+                            -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

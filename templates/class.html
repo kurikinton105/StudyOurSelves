@@ -27,9 +27,21 @@
             <div class="class">
                 <div class="title">
                     <h1>{{classname}}</h1>
-                    <form action="" method="" name="">
-                        <input type="submit" value="登録">
-                        <input type="submit" value="解除">
+                    <form action="" method="POST" name="">
+                        
+                        <div class="button">
+                            {% if isTake == False %}
+                                <a class="button" href="/class/{{classname}}/register?id={{classId}}">登録</a>
+                            {% endif %}
+                            {% if isTake == True %}
+                                <a>登録済み</a>
+                                <a class="button" href="/class/{{classname}}/release?id={{classId}}">解除</a>
+                            {% endif %}
+                        </div>
+                        
+                        
+     
+                        
                     </form>
                 </div>
                 <section>
@@ -50,18 +62,27 @@
                             <div class="event-name">
                                 <h3>イベント名</h3>
                             </div>
+                            <p class="info">
+                                ここにイベントの詳細書いてくれ
+                            </p>
                         </div>
                         <div class="event">
                             <div class="date">2020-8-15</div>
                             <div class="event-name">
                                 <h3>イベント名</h3>
                             </div>
+                            <p class="info">
+                                ここにイベントの詳細書いてくれ
+                            </p>
                         </div>
                         <div class="event">
                             <div class="date">2020-8-15</div>
                             <div class="event-name">
                                 <h3>イベント名</h3>
                             </div>
+                            <p class="info">
+                                ここにイベントの詳細書いてくれ
+                            </p>
                         </div>
                     </div>
                 </section>
@@ -77,17 +98,17 @@
                             </form>
                         </div>
                         <ul class="q-sets">
-
-                            <li class="q-set">
-                                <div class="q-title">
-                                    <a class="q-title" href="/question">problemname</a>
-                                </div>
+                            {% for set in ProblemSets %}
+                                <li class="q-set">
+                                    <div class="q-title">
+                                        <a class="q-title" href="/question">{{set[1]}}</a>
+                                    </div>
+                                </li>
                                 <div class="button">
-                                    <a class="button" href="/question">解く</a>
-                                    <a class="button" href="/register-question">問題追加</a>
+                                    <a class="button" href="/class/{{classname}}/question?set={{set[0]}}">解く</a>
+                                    <a class="button" href="/class/{{classname}}/register_question?set={{set[0]}}">問題追加</a>
                                 </div>
-                            </li>
-
+                            {% endfor %}
                         </ul>
                     </div>
                 </section>

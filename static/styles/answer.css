@@ -47,7 +47,7 @@ main{
     background-blend-mode: luminosity;
     /*background-color: #7acbe1;*/
     background-color: #33121a;
-    background-image: url(../images/home_background.jpg);
+    background-image: url(../images/home_background.webp);
     background-position: center top;
     background-repeat: repeat;
     background-size: conver;
@@ -57,80 +57,87 @@ main{
 
 }
 
-textarea{
-    background-color: rgba(15,15,15,0.2);
-    border-radius: 3px;
-    margin-left: 1rem;
-    min-height: 4rem;
-    padding: 0.2rem 0.5rem;
-    width: 80%;
-}
-
-.long{
-    min-height: 7rem;
-}
-
-select{
-    border: solid 1px black;
-    cursor: pointer;
-    margin-left: 1rem;
-    overflow: hidden;
-    padding: 0.2rem 0.5rem;
-    text-overflow: ellipsis;
-    width: 8rem;
-    white-space: nowrap;
-}
-
-.register-question{
+.answer{
     background-color: rgba(255,255,255,0.9);
     border-radius: 1rem;
     margin-top: 2rem;
+    margin-bottom: 2rem;
     width: 70%;
 }
 
 .class-name{
     font-family: serif;
-    margin-top: 1.5rem;
-    marign-bottom: 1rem;
+    margin: 1.5rem 0rem;
     text-align: center;
 }
-.mode{
-    font-family: serif;
-    text-align: center;
+.class-name h2{
+    padding-bottom: 1rem;
+}
+.mark-correct{
+    color: red;
+    font-size: 4rem;
+    font-weight: bold;
+}
+.mark-wrong{
+    color: blue;
+    font-size: 4rem;
+    font-weight: bold;
 }
 
-.question{
-    margin: 1rem 2rem;
-}
-.question h2{
-    margin-top: 2rem;
-}
-
-.choice{
+.problem-statement{
+    box-sizing: border-box;
     margin-bottom: 1rem;
+    width: 100%;
 }
-
+.problem-statement h2{
+    padding: 0.2rem 1rem;
+}
+.problem-statement p{
+    padding: 1rem 2rem;
+}
+.answer-statement{
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+.answer-statement h2{
+    padding: 0.2rem 1rem;
+}
+.answer-statement ul{
+    display: flex;
+    list-style: none;
+    max-width: 30rem;
+    width: 80%;
+}
+.answer-statement p{
+    padding: 1rem 2rem;
+}
+.correct{
+    color: red;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.wrong{
+    color: blue;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
 
 .button{
+    text-align: right;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    max-width: 30rem;
 }
-
-.button{
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
+.button a{
+    color: black;
+    display: inline-block;
+    border: solid 1px black;
+    border-radius: 3px;
+    padding: 0.2rem 0.5rem;
 }
-
-.button input[type="submit"]{
-    background-color: #dddddd;
-    border-radius: 4rem;
-    border-style: solid;
-    border-width: 0.1rem;
-    cursor: pointer;
-    line-height: 1;
-    padding: 0.3rem 0.5rem;
-}
-.button input[type="submit"]:hover{
-    background-color: rgba(204,0,0,0.4);
+.button a:hover{
+    background-color: rgba(204,0,0,0.2);
 }

@@ -47,7 +47,7 @@ main{
     background-blend-mode: luminosity;
     /*background-color: #7acbe1;*/
     background-color: #33121a;
-    background-image: url(../images/home_background.jpg);
+    background-image: url(../images/home_background.webp);
     background-position: center top;
     background-repeat: repeat;
     background-size: conver;
@@ -57,80 +57,67 @@ main{
 
 }
 
-textarea{
-    background-color: rgba(15,15,15,0.2);
-    border-radius: 3px;
-    margin-left: 1rem;
-    min-height: 4rem;
-    padding: 0.2rem 0.5rem;
-    width: 80%;
-}
-
-.long{
-    min-height: 7rem;
-}
-
-select{
-    border: solid 1px black;
-    cursor: pointer;
-    margin-left: 1rem;
-    overflow: hidden;
-    padding: 0.2rem 0.5rem;
-    text-overflow: ellipsis;
-    width: 8rem;
-    white-space: nowrap;
-}
-
-.register-question{
+.question-list{
     background-color: rgba(255,255,255,0.9);
     border-radius: 1rem;
     margin-top: 2rem;
+    margin-bottom: 2rem;
+    min-width: 30rem;
     width: 70%;
 }
-
-.class-name{
+.question-list h1{
     font-family: serif;
-    margin-top: 1.5rem;
-    marign-bottom: 1rem;
+    margin: 2rem 0rem;
     text-align: center;
 }
-.mode{
+.question-list h2{
     font-family: serif;
+    margin-bottom: 1.5rem;
     text-align: center;
 }
 
-.question{
-    margin: 1rem 2rem;
+.question-list ul{
+    list-style: none;
+    margin: 0rem 4rem;
 }
-.question h2{
+.question-list li{
+    padding: 0.5rem 0rem;
+    display: flex;
+    justify-content: space-between;
+}
+.q-title{
+    font-size: 1.1rem;
+    width: 63%;
+}
+.q-buttons{
+    text-align: right;
+    width: 35%;
+}
+.q-button{
+    color: black;
+    border: solid 1px black;
+    border-radius: 3px;
+    padding: 0.2rem 0.5rem;
+}
+.q-button:hover{
+    background-color: rgba(204,0,0,0.2);
+}
+
+.button{
+    text-align: right;
+    display: flex;
+    justify-content: space-between;
     margin-top: 2rem;
+    margin-bottom: 2rem;
+    max-width: 30rem;
 }
-
-.choice{
-    margin-bottom: 1rem;
+.button a{
+    color: black;
+    display: inline-block;
+    border: solid 1px black;
+    border-radius: 3px;
+    padding: 0.2rem 0.5rem;
 }
-
-
-.button{
-    display: flex;
-    justify-content: center;
-}
-
-.button{
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
-}
-
-.button input[type="submit"]{
-    background-color: #dddddd;
-    border-radius: 4rem;
-    border-style: solid;
-    border-width: 0.1rem;
-    cursor: pointer;
-    line-height: 1;
-    padding: 0.3rem 0.5rem;
-}
-.button input[type="submit"]:hover{
-    background-color: rgba(204,0,0,0.4);
+.button a:hover{
+    background-color: rgba(204,0,0,0.2);
 }
