@@ -7,77 +7,46 @@
 
         <!--CSS----------------------------------------------->
         <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
-        <link rel="stylesheet" href="../static/styles/question_list.css">
+        <link rel="stylesheet" href="../../static/styles/question_list.css">
     </head>
 
     <body>
         <header>
             <div class="title">
-                <a href="index.html">SOS</a>
+                <a href="/">SOS</a>
             </div>
             <div class="menus">
                 <ul>
                     <!--ユーザー情報編集ページへ-->
-                    <li><a href="home_ver2.html">ユーザー名</a></li>
-                    <li><a href="index.html">ログアウト</a></li>
+                    <li><a href="/">{{username}}</a></li>
+                    <li><a href="/logout">ログアウト</a></li>
                 </ul>
             </div>
         </header>
         <main>
             <div class="question-list">
-                <h1>授業名</h1>
-                <h2>問題セット名</h2>
+                <h1>{{classname}}</h1>
+                <h2>{{setTitle}}</h2>
                 <form action="" method="" name="">
                     <ul>
-                        <li>
-                            <p>
-                                <div class="q-title">
-                                    問題タイトル
-                                </div>
-                                <div class="q-buttons">
-                                    <input class="q-button" type="submit" value="削除">
-                                    <a class="q-button" href="edit_question.html">編集</a>
-                                </div>
-                            </p>
-                        </li>
-                        <li>
-                            <p>
-                                <div class="q-title">
-                                    問題タイトル
-                                </div>
-                                <div class="q-buttons">
-                                    <input class="q-button" type="submit" value="削除">
-                                    <a class="q-button" href="edit_question.html">編集</a>
-                                </div>
-                            </p>
-                        </li>
-                        <li>
-                            <p>
-                                <div class="q-title">
-                                    問題タイトル
-                                </div>
-                                <div class="q-buttons">
-                                    <input class="q-button" type="submit" value="削除">
-                                    <a class="q-button" href="edit_question.html">編集</a>
-                                </div>
-                            </p>
-                        </li><li>
-                            <p>
-                                <div class="q-title">
-                                    問題タイトル
-                                </div>
-                                <div class="q-buttons">
-                                    <input class="q-button" type="submit" value="削除">
-                                    <a class="q-button" href="edit_question.html">編集</a>
-                                </div>
-                            </p>
-                        </li>
-                        
+                        {% for problem in ProblemSet%}
+                            <li>
+                                <p>
+                                    <div class="q-title">
+                                        {{problem[2]}}
+                                    </div>
+                                    <div class="q-buttons">
+                                        <a class="q-button" href="/class/{{classname}}/delete_question?set={{setId}}&id={{problem[0]}}">削除</a>
+                                        <a class="q-button" href="/class/{{classname}}/edit_question?set={{setId}}&id={{problem[0]}}">編集</a>
+                                    </div>
+                                </p>
+                            </li>
+                        {% endfor %}            
                     </ul>
                 </form>
                 <div class="button">
-                    <a href="class.html">授業ページへ</a>
-                    <a href="register_question.html">追加する</a>
+                    <a class="button" href="/class/{{classname}}">授業ページへ</a>
+                    <a class="button" href="/class/{{classname}}/register_question?set={{setId}}">追加する</a>
                 </div>
             </div>
         </main>

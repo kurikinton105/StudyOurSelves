@@ -27,7 +27,7 @@ def calender_sort(ToDoList_json): # ソートするjsonデータ（ToDo)
 def search_class(search_text,classlist_json): #search_text:検索語,classlist_json class情報
     find_class_index =[]
     s_len = len(search_text)
-    print(len(classlist_json))
+    #print(len(classlist_json))
     for i in range(len(classlist_json)):
         trg = classlist_json[i][1]
         t_len = len(trg)

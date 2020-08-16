@@ -82,29 +82,29 @@ def home():
        error_flag = False
        return render_template('index.html')
    else:
-        print("ログインなう")
+        print("ログイン")
         #取っているクラスの情報を取得
         taking_class_index = get_Taking_class(database_user_index)
-        print("ユーザーindex",database_user_index)
-        print("取っているインデックス",taking_class_index)
+        #print("ユーザーindex",database_user_index)
+        #print("取っているインデックス",taking_class_index)
         #インデックスからクラスのToDoを取得
         ToDoList_json = GetTodo(taking_class_index) #データの取得をここで行なっている。
-        print("履修している科目",ToDoList_json)
+        #print("履修している科目",ToDoList_json)
         #予定データのソート
         sort_cut_data = calender_sort(ToDoList_json) # ソートはcode_def.py内にて定義
-        print(sort_cut_data)
+        #print("sort_cut_data",sort_cut_data)
 
         classlist_user =[]
         for i in range(len(taking_class_index)):
             classname = get_classname_from_index(taking_class_index[i]) #
             classlist_user.append(classname)
-        print("取っているクラスの一覧",classlist_user)
-        print("----ここで表示----")
+        #print("取っているクラスの一覧",classlist_user)
+        #print("----ここで表示----")
         #クラス情報の一覧を取得する
         global classlist_json
         classlist_json=get_class_all()
 
-        return render_template('home_ver2.html',id_name=database_user_id, ToDo = sort_cut_data,classlist_user = classlist_user)
+        return render_template('home_ver2.html',id_name=database_user_id, ToDo = sort_cut_data,classlist_user = classlist_user,username = database_user_id)
 
 # ------------------------------------------------------------------
 @app.route('/login')
@@ -132,10 +132,7 @@ def newuserpage_post():
     #ハッシュ化する
     password_hash_1st = bcrypt.generate_password_hash(password_1st).decode('utf-8')
     password_2nd = flask.request.form['re-password']
-    #ハッシュ化する
-    password_hash_2nd = bcrypt.generate_password_hash(password_2nd).decode('utf-8')
-    print(password_1st,password_hash_1st)
-    print(password_2nd,password_hash_2nd)
+
     if password_1st != password_2nd:
         message ="パスワードが同じではありません"
         print("パスワードが同じではありません")
@@ -190,8 +187,8 @@ def do_admin_login():
 @app.route('/protected')
 @flask_login.login_required #ログインが必要だよ
 def protected():
-    print(flask_login.current_user.id)
-    return render_template('home_ver2.html',id_name=flask_login.current_user.id)
+    #print(flask_login.current_user.id)
+    return render_template('home_ver2.html',id_name=flask_login.current_user.id,username = database_user_id)
     #return 'Logged in as: ' + flask_login.current_user.id
 
 # -----個々のページの処理コード-----------------------------------------
@@ -200,17 +197,18 @@ def protected():
 def register_class():
     with COS5SQL() as cos5sql:
         classlist = cos5sql.GetAllClasses()
-    return render_template('register_class.html',classlist = classlist)
+    return render_template('register_class.html',classlist = classlist,username = database_user_id)
 
 #サーチの時の機能を追加
 @app.route('/searchtext', methods=['POST']) #ここでログインのPOSTを行う
+@flask_login.login_required
 def searching():
     with COS5SQL() as cos5sql:
         classlist = cos5sql.GetAllClasses()
     search_text = flask.request.form['searching'] #searchボックスの中身を取得
-    print(search_text)
+    #print(search_text)
     search_json = search_class(search_text,classlist) #code_def内の関数でサーチ機能を実装
-    return render_template('register_class.html',classlist = search_json)
+    return render_template('register_class.html',classlist = search_json,username = database_user_id)
 
 
 # classページの動的作成
@@ -222,16 +220,18 @@ def classpage(classname):
         classId = cos5sql.GetClassId(classname)
         isTakeClass = cos5sql.IsTakeClass(database_user_index,classId)
         ProblemSets = cos5sql.GetProblemSetInfo(classId)
-    return render_template("class.html",classname = classname,ProblemSets = ProblemSets,search=isSearch,classId = classId,isTake = isTakeClass)
+    return render_template("class.html",classname = classname,ProblemSets = ProblemSets,search=isSearch,classId = classId,isTake = isTakeClass,username = database_user_id)
 
 @app.route('/class/<classname>/register')
+@flask_login.login_required
 def class_register(classname):
     classId = int(request.args.get('id'))
     with COS5SQL() as cos5sql:
         cos5sql.AddClass2User(database_user_index,classId)
-    return flask.redirect(flask.url_for('classpage',classname=classname))
+    return flask.redirect(flask.url_for('classpage',classname=classname,username = database_user_id))
 
 @app.route('/class/<classname>/release')
+@flask_login.login_required
 def class_release(classname):
     classId = int(request.args.get('id'))
     with COS5SQL() as cos5sql:
@@ -239,66 +239,142 @@ def class_release(classname):
     return flask.redirect(flask.url_for('home'))
 
 # edit
-@app.route('/edit')
+@app.route('/edit_user_info')
+@flask_login.login_required
 def edit_user():
-    return render_template("class.html")
+    return render_template("edit_user_info.html",username = database_user_id)
 
-@app.route('/edit/passwordchange', methods=['POST']) #ここで、データベースの変更のポストを送る
+@app.route('/edit_user_info/passwordchange', methods=['POST']) #ここで、データベースの変更のポストを送る
+@flask_login.login_required
 def edit_userpassword():
     try:
         print("ここでデータベース操作")
         flash("パスワードの変更が完了しました。")
-        return render_template("home.html")
+        return render_template("home.html",username = database_user_id)
     except:
         flash("エラーが発生しました。もう一度やり直してくだいさい")
-        return render_template("class.html")
+        return render_template("class.html",username = database_user_id)
 
 
 
 # 予定追加
 @app.route('/add_event')
+@flask_login.login_required
 def add_event():
     #取っているクラスを一覧表示する
-    taking_class_index = get_Taking_class(database_user_index)
-    return render_template("register_schedule.html",class_list_RS=taking_class_index)
 
-@app.route('/add_event/passwordchange', methods=['POST']) #ここで、データベースの変更のポストを送る
+    with COS5SQL() as cos5sql:
+        classlist=cos5sql.get_Taking_class(database_user_index)
+    return render_template("register_schedule.html",classlist=classlist,username = database_user_id)
+
+
+@app.route('/add_event_post', methods=['POST']) #ここで、データベースの変更のポストを送る
+@flask_login.login_required
 def add_event_post():
-    print("1")
+        classId = flask.request.form['select_class']
+        print("class\n")
+        name = flask.request.form['eventname']
+        print("name\n")
+        date = flask.request.form['eventdate']
+        print("date\n")
+        info = flask.request.form['eventinfo']
+        print("eventinfo\n")
+        with COS5SQL() as  cos5sql:
+            cos5sql.ToDo_insert(classId,name,date,info)
+        return render_template("feedback.html",username = database_user_id)
+
 
 # making_class(クラスの作成)
 @app.route('/make_class')
+@flask_login.login_required
 def make_class_page():
     #新しいクラスを作成する
-    return render_template("make_class.html")
+    return render_template("make_class.html",username = database_user_id)
+
 
 @app.route('/make_class_post', methods=['POST']) #ここで、データベースの変更のポストを送る
+@flask_login.login_required
 def make_class_post():
     make_class_name = flask.request.form['class_name'] #クラスネームの取り出し
     make_class_info = flask.request.form['class_info'] #クラスネームの取り出し
     make_class(make_class_name,make_class_info)
-    return render_template("feedback.html")
+    return render_template("feedback.html",username = database_user_id)
 
 
 #question
 @app.route('/class/<classname>/register_question',methods=['GET'])
+@flask_login.login_required
 def register_question_get(classname):
-    return render_template("register_question.html",class_name = classname)
+    return render_template("register_question.html",class_name = classname,username = database_user_id)
 
 @app.route('/class/<classname>/register_question_post',methods=['POST'])
+@flask_login.login_required
 def register_question_post(classname):
     setId = request.args.get('set')
     if(setId == None): flask.abort(400,'Invalid Request')
+    name = flask.request.form['name']
     question = flask.request.form['question']
     selection = [flask.request.form['selection1'],flask.request.form['selection2'],flask.request.form['selection3'],flask.request.form['selection4']]
     answer = flask.request.form['answer']
+    solution = flask.request.form['solution']
     with COS5SQL() as cos5sql:
         classid = cos5sql.GetClassId(classname)
-        problemId = cos5sql.InsertProblem(classid,setId,"",question,selection,answer)
+        problemId = cos5sql.InsertProblem(classid,name,question,selection,answer,solution)
         cos5sql.AddProblem2Set(setId,problemId)
-    return flask.redirect(flask.url_for('classpage',classname=classname))
+    return flask.redirect(flask.url_for('classpage',classname=classname,username = database_user_id))
+
+@app.route('/class/<classname>/edit_question',methods=['GET'])
+@flask_login.login_required
+def edit_question(classname):
+    setId = request.args.get('set')
+    problemId = request.args.get('id')
+    if(setId == None or problemId ==None): flask.abort(400,'Invalid Request')
+    with COS5SQL() as cos5sql:
+        problem = cos5sql.GetProblem(problemId)
+    return flask.render_template('edit_question.html',classname=classname,setId=setId,problem=problem,username = database_user_id)
+
+@app.route('/class/<classname>/edit_question_post',methods=['POST'])
+@flask_login.login_required
+def edit_question_post(classname):
+    setId = request.args.get('set')
+    problemId = request.args.get('id')
+    if(setId == None or problemId ==None): flask.abort(400,'Invalid Request')
+    name = flask.request.form['name']
+    question = flask.request.form['question']
+    selection = [flask.request.form['choice1'],flask.request.form['choice2'],flask.request.form['choice3'],flask.request.form['choice4']]
+    answer = flask.request.form['answer']
+    solution = flask.request.form['solution']
+    with COS5SQL() as cos5sql:
+        classId = cos5sql.GetClassId(classname)
+        cos5sql.UpdateProblem(classId,problemId,name,question,selection,answer,solution)
+
+    return flask.redirect(flask.url_for('question_list',classname=classname,set=setId,username = database_user_id))
+
+@app.route('/class/<classname>/delete_question',methods=['GET'])
+@flask_login.login_required
+def delete_question(classname):
+    setId = request.args.get('set')
+    problemId = request.args.get('id')
+    if(setId == None or problemId ==None): flask.abort(400,'Invalid Request')
+    with COS5SQL() as cos5sql:
+        cos5sql.RemoveProblemFSet(setId,problemId)
+        cos5sql.DeleteProblem(problemId)
+    return flask.redirect(flask.url_for('question_list',classname=classname,set=setId,username = database_user_id))
+
+
+@app.route('/class/<classname>/question_list',methods=['GET'])
+@flask_login.login_required
+def question_list(classname):
+    setId = request.args.get('set')
+    if(setId == None): flask.abort(400,'Invalid Request')
+    with COS5SQL() as cos5sql:
+        setTitle = cos5sql.GetProblemSetInfoByID(setId)[1]
+        ProblemSet = cos5sql.GetProblemSet(setId)
+    return render_template("question_list.html",classname=classname,setId = setId,setTitle = setTitle,ProblemSet=ProblemSet,username = database_user_id)
+
 
 @app.route('/class/<classname>/question',methods=['GET'])
+@flask_login.login_required
 def question_get(classname):
     setId = request.args.get('set')
     n = int(request.args.get('n')) if request.args.get('n') != None else 1
@@ -306,16 +382,28 @@ def question_get(classname):
     with COS5SQL() as cos5sql:
         ProblemSet = cos5sql.GetProblemSet(setId)
     Problem = ProblemSet[n-1]
-    selection = [Problem[4],Problem[5],Problem[6],Problem[7]]
     if(n == None):
-        return render_template("question.html",classname=classname,setId = setId,ProblemText=Problem[3],selection=selection,n=1,max=len(ProblemSet))
+        return render_template("question.html",classname=classname,setId = setId,Problem=Problem,n=1,max=len(ProblemSet),username = database_user_id)
     elif(n != None):
-        return render_template("question.html",classname=classname,setId = setId,ProblemText=Problem[3],selection=selection,n=n,max=len(ProblemSet))
+        return render_template("question.html",classname=classname,setId = setId,Problem=Problem,n=n,max=len(ProblemSet),username = database_user_id)
+
+@app.route('/class/<classname>/makeSet',methods=['POST'])
+@flask_login.login_required
+def make_problemSet(classname):
+    SetName = flask.request.form['SetName']
+    with COS5SQL() as cos5sql:
+        setId = cos5sql.AddProblemSet(SetName,"")
+        classId = cos5sql.GetClassId(classname)
+        cos5sql.AddProblemSet2Class(classId,setId)
+    return flask.redirect(flask.url_for('classpage',classname=classname,username = database_user_id))
+
 # ------------------------------------------------------------------
 @app.route("/logout")
+@flask_login.login_required
 def logout():
    session['logged_in'] = False
    flask_login.logout_user()
+   #print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
    return home()
 
 # ------------------------------------------------------------------

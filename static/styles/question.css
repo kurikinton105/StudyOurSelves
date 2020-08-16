@@ -132,3 +132,83 @@ main{
 .button input[type="submit"]:hover{
     background-color: rgba(204,0,0,0.2);
 }
+
+/*tom追加分ーーー */
+@keyframes fade {
+    0% {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+dialog {
+  padding: 0;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 1rem;
+  box-shadow: 1px 1px 2px #333;
+  margin-top: 1rem;
+  max-width: 40rem;
+  background-color: rgba(221, 221, 221, 0.9);
+  position: relative;
+  text-align: center;
+  width: 80%;
+}
+        
+dialog[open]{
+  animation: fade 1s ease 0s 1 normal;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+dialog h2 {
+  padding: 10px;
+  background-color: #7a1c0c;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 1rem;
+  box-shadow: none;
+  margin: 0;
+  color: #fff5d3;
+}
+dialog h3 {
+  padding: 10px;
+  background-color: #ffffff00;
+  margin: 0;
+  color: #000000;
+}
+dialog p{
+    padding: 0rem 1rem;
+    text-align: left;
+}
+
+dialog div {
+  color:#000000;
+  padding: 10px;
+}
+
+#close{
+  background-color: rgba(70,16,0,0.4);
+  text-align: center;
+  margin: 10px auto 20px auto;
+  max-width: 10rem;
+  padding: 10px;
+  border-radius: 4px;
+  width: 50%;
+  font-weight: bold;
+  color: black;
+  box-shadow: 0px 1px 3px #333;
+  cursor: pointer;
+}
+#close:hover{
+    background-color: rgba(70,16,0,0.6);
+}
+
+dialog-content{
+  display: flex;
+}

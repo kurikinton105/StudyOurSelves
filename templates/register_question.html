@@ -13,13 +13,13 @@
     <body>
         <header>
             <div class="title">
-                <a href="index.html">SOS</a>
+                <a href="/">SOS</a>
             </div>
             <div class="menus">
                 <ul>
                     <!--ユーザー情報編集ページへ-->
-                    <li><a href="home_ver2.html">ユーザー名</a></li>
-                    <li><a href="index.html">ログアウト</a></li>
+                    <li><a href="/">{{username}}</a></li>
+                    <li><a href="/logout">ログアウト</a></li>
                 </ul>
             </div>
         </header>
@@ -31,6 +31,8 @@
 
                 <div class="question">
                     <form action="/class/{{class_name}}/register_question_post?set={{ request.args.get('set') }}" method="POST">
+                        <h2>問題名</h2>
+                        <input type="text" name="name" placeholder="問題名を書いてください">
                         <h2>問題文</h2>
                         <textarea name = "question" class="long" placeholder="問題文を書いてください"></textarea>
                         <h2>選択肢</h2>
@@ -60,7 +62,7 @@
                             <option value="4">4</option>
                         </select>
                         <h2>解説</h2>
-                        <textarea class="long" placeholder="解説を書いてください"></textarea>
+                        <textarea class="long" name="solution" placeholder="解説を書いてください"></textarea>
                         <div class="button">
                             <input type="submit" value="登録">
                         </div>

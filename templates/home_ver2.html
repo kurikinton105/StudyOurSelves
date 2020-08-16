@@ -18,7 +18,7 @@
             <div class="menus">
                 <ul>
                     <!--ユーザー情報編集ページへ-->
-                    <li><a href="/edit">ユーザー名</a></li>
+                    <li><a href="/">{{username}}</a></li>
                     <li><a href="/logout">ログアウト</a></li>
                 </ul>
             </div>
@@ -30,7 +30,7 @@
                     <li><a href="/edit_user_info">パスワード変更</a></li>
                     <li><a href="/register_class">授業登録</a></li>
                     <li><a href="/make_class">新規授業作成</a></li>
-                    <li><a href="/register_schedule">予定追加</a></li>
+                    <li><a href="/add_event">予定追加</a></li>
                 </ul>
                 <h1>Classes</h1>
                 <ul>
@@ -48,7 +48,7 @@
                             <a href="/class/{{classlist_user[ToDoContent[0]]}}">{{classlist_user[ToDoContent[0]]}}</a>  {{ToDoContent[1]}}
                         </div>
                         <p class="info">
-                            イベント情報ここに書いてほしい。
+                            {{ToDoContent[3]}}
                         </p>
                     </div>
                 {% endfor %}

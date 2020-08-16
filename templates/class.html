@@ -18,7 +18,7 @@
             <div class="menus">
                 <ul>
                     <!--ユーザー情報編集ページへ-->
-                    <li><a href="/edit">ユーザー名</a></li>
+                    <li><a href="/edit">{{username}}</a></li>
                     <li><a href="/logout">ログアウト</a></li>
                 </ul>
             </div>
@@ -91,12 +91,14 @@
                         <h2>演習問題</h2>
                     </div>
                     <div class="content">
-                        <div class="make-q-set">
-                            <form action="" method="" name="">
-                                <input type="text" placeholder="作成したい問題セット名">
-                                <input type="submit" value="作成">
-                            </form>
-                        </div>
+                        {% if isTake == True %}
+                            <div class="make-q-set">
+                                <form action="/class/{{classname}}/makeSet" method="POST" >
+                                    <input type="text" name='SetName' placeholder="作成したい問題セット名">
+                                    <input type="submit" value="作成">
+                                </form>
+                            </div>
+                        {% endif %}
                         <ul class="q-sets">
                             {% for set in ProblemSets %}
                                 <li class="q-set">
@@ -107,6 +109,7 @@
                                 <div class="button">
                                     <a class="button" href="/class/{{classname}}/question?set={{set[0]}}">解く</a>
                                     <a class="button" href="/class/{{classname}}/register_question?set={{set[0]}}">問題追加</a>
+                                    <a class="button" href="/class/{{classname}}/question_list?set={{set[0]}}">問題リスト</a>
                                 </div>
                             {% endfor %}
                         </ul>

@@ -43,8 +43,8 @@ def getpassword(user_id): #パスワードの取得 user_id return
             sql = "SELECT * FROM UserInfo WHERE UserName = '"+user_id+"';"
             cursor.execute(sql)
             rows = cursor.fetchall()
-            print("ユーザ情報",rows[0][0],rows[0][1],rows[0][2],rows[0][3])
-            print("ユーザーの検索が終わりました")
+            #print("ユーザ情報",rows[0][0],rows[0][1],rows[0][2],rows[0][3])
+            #print("ユーザーの検索が終わりました")
             return rows[0][0],rows[0][1],rows[0][2],rows[0][3]
 def getuserlist(): #ユーザ情報だけ
     with pyodbc.connect('DRIVER='+driver+';SERVER='+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:
@@ -52,7 +52,7 @@ def getuserlist(): #ユーザ情報だけ
             sql = "SELECT UserName FROM UserInfo ;"
             cursor.execute(sql)
             rows = cursor.fetchall()
-            print("ユーザ情報",rows)
+            #print("ユーザ情報",rows)
             user_list =[]
             for i in range(len(rows)):
                 user_list.append(rows[i][0])
@@ -67,7 +67,7 @@ def get_classinfo(class_name): # クラス情報を取得する(クラスネー�
             cursor.execute(sql)
             rows = cursor.fetchall()
             #rows=rows.encode("utf8")
-            print("ユーザ情報",rows)
+            #print("ユーザ情報",rows)
             print("クラス情報の検索が終わりました")
             return rows[0][0]
 
@@ -78,7 +78,7 @@ def get_class_all(): # クラスの全ての情報を取得する(クラスネ�
             cursor.execute(sql)
             rows = cursor.fetchall()
             #rows=rows.encode("utf8")
-            print("ユーザ情報",rows)
+            #print("ユーザ情報",rows)
             print("クラス情報の検索が終わりました")
             #class_name_from_index = get_classname_from_index(rows[0][0])
             #print(class_name_from_index)
@@ -109,7 +109,7 @@ def GetTodo(ClassId_list): #ユーザが取っているクラスのToDを返却�
                 cursor.execute(sql)
                 rows = cursor.fetchall()
                 #rows=rows.encode("utf8")
-                print("クラスToDo情報",rows)
+                #print("クラスToDo情報",rows)
                 if rows != []:
                     for i in range(len(rows)):
                         ToDoList_user.append(rows[i])
@@ -122,7 +122,7 @@ def get_classname_from_index(class_index):#クラスidからクラスの名前�
             sql = "SELECT ClassName FROM [dbo].[ClassInfo] WHERE ClassId = '"+str(class_index)+"';"
             cursor.execute(sql)
             rows = cursor.fetchall()
-            print(rows[0][0])
+            #print(rows[0][0])
             return rows[0][0]
 
 #---------------ここからは実行するやつ-----------------------
@@ -147,7 +147,7 @@ class COS5SQL:
     def __exit__(self, exc_type, exc_value, traceback):
         self.cursor.close()
         self.conn.close()
-    
+
     def GetUserId(self,username):
         self.cursor.execute("SELECT UserId FROM [dbo].[UserInfo] WHERE UserName = '" + username + "'")
         row = self.cursor.fetchall()
@@ -168,25 +168,69 @@ class COS5SQL:
             print("データベースエラー:複数Id存在")
 
     def GetProblemSetInfo(self,classId):
-        self.cursor.execute("SELECT * FROM [dbo].[ProblemSetInfo] WHERE ProblemSetId = (SELECT ProblemSetId FROM [dbo].[ClassProblemSets] WHERE ClassId=" + str(classId) +")" )
+        self.cursor.execute("SELECT * FROM [dbo].[ProblemSetInfo] WHERE ProblemSetId IN (SELECT ProblemSetId FROM [dbo].[ClassProblemSets] WHERE ClassId=" + str(classId) +")" )
         rows = self.cursor.fetchall()
         return rows
+    
+    def GetProblemSetInfoByID(self,setId):
+        self.cursor.execute("SELECT * FROM [dbo].[ProblemSetInfo] WHERE ProblemSetId=" + str(setId))
+        row = self.cursor.fetchone()
+        return row
+
+    def GetProblem(self,problemId):
+        self.cursor.execute("SELECT * FROM [dbo].[Problem] WHERE ProblemId=" + str(problemId))
+        row = self.cursor.fetchone()
+        return row
 
     def GetProblemSet(self,setId):
         self.cursor.execute("SELECT * FROM [dbo].[Problem] WHERE ProblemId IN (SELECT ProblemId FROM [dbo].[ProblemSet] WHERE ProblemSetId=" + str(setId) +")" )
         rows = self.cursor.fetchall()
         return rows
 
-    def InsertProblem(self,classId,setId,name,question,selections,answer):
-        sql = "INSERT INTO [dbo].[Problem] (ClassId,ProblemName,ProblemText,Selection1,Selection2,Selection3,Selection4,Answer)\
-              VALUES("+str(classId)+", N'"+ name + "',N'" +question + "',\
-                  N'" +selections[0] + "',N'" +selections[1] + "',N'" +selections[2] + "',N'" +selections[3] + "'," +answer + ")"
+    def UpdateProblem(self,problemId,classId,name,question,selections,answer,solution):
+        sql = "UPDATE [dbo].[Problem] Set " + \
+            "ClassId=" + str(classId) + \
+            ", ProblemName=N'" + name + \
+            "', ProblemText=N'" + question + \
+            "', Selection1=N'" + selections[0] + \
+            "', Selection2=N'" + selections[1] + \
+            "', Selection3=N'" + selections[2] + \
+            "', Selection4=N'" + selections[3] + \
+            "', Answer=" + answer + \
+            ", Solution=N'" + solution + \
+            "' WHERE ProblemId=" + str(problemId)  
         print(sql)
+        self.cursor.execute(sql)
+        self.conn.commit()
+
+    def InsertProblem(self,classId,name,question,selections,answer,solution):
+        sql = "INSERT INTO [dbo].[Problem] (ClassId,ProblemName,ProblemText,Selection1,Selection2,Selection3,Selection4,Answer,Solution)\
+              VALUES("+str(classId)+", N'"+ name + "',N'" +question + "',\
+                  N'" +selections[0] + "',N'" +selections[1] + "',N'" +selections[2] + "',N'" +selections[3] + "'," +answer + ",N'" + solution + "')"
         self.cursor.execute(sql)
         self.conn.commit()
         self.cursor.execute("SELECT IDENT_CURRENT('dbo.Problem')")
         problemId = self.cursor.fetchone()[0]
         return problemId
+
+    def DeleteProblem(self,problemId):
+        self.cursor.execute("DELETE FROM [dbo].[Problem] WHERE ProblemId = "+str(problemId))
+        self.conn.commit()
+    
+    def RemoveProblemFSet(self,setId,problemId):
+        self.cursor.execute("DELETE FROM [dbo].[ProblemSet] WHERE ProblemSetId = "+str(setId) + "AND ProblemId=" + str(problemId))
+        self.conn.commit()
+
+    def AddProblemSet(self,setname,setinfo):
+        self.cursor.execute("INSERT INTO [dbo].[ProblemSetInfo] (ProblemSetName,ProblemSetInfo)  VALUES(N'"+setname+"',N' " + setinfo + "')" )
+        self.conn.commit()
+        self.cursor.execute("SELECT IDENT_CURRENT('dbo.ProblemSetInfo')")
+        problemId = self.cursor.fetchone()[0]
+        return problemId
+
+    def AddProblemSet2Class(self,classId,setId):
+        self.cursor.execute("INSERT INTO [dbo].[ClassProblemSets] (ClassId,ProblemSetId)  VALUES("+str(classId)+", " + str(setId) + ")" )
+        self.conn.commit()
 
     def AddProblem2Set(self,setId,problemId):
         self.cursor.execute("INSERT INTO [dbo].[ProblemSet] (ProblemSetId,ProblemId)  VALUES("+str(setId)+", " + str(problemId) + ")" )
@@ -199,7 +243,7 @@ class COS5SQL:
     def IsTakeClass(self,userId,classId):
         self.cursor.execute("SELECT * FROM [dbo].[TakingClasses] WHERE UserId = "+str(userId)+"AND ClassId =" + str(classId))
         rows = self.cursor.fetchone()
-        print("-------------------------\n",rows)
+        #print("-------------------------\n",rows)
         if(rows == None):
             return False
         else:
@@ -232,13 +276,10 @@ class COS5SQL:
                 self.conn.commit()
                 print("クラスの登録が終わりました")
 
-    def ToDo_insert(ClassId,TodoName,TodoDate,TodoInfo): #ToDO情報のインサート
-        with pyodbc.connect('DRIVER='+driver+';SERVER='+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:
-            with conn.cursor() as cursor:
+    def ToDo_insert(self,ClassId,TodoName,TodoDate,TodoInfo): #ToDO情報のインサート
                 sql = "INSERT INTO [dbo].[Todos] (ClassId,TodoName,TodoDate,TodoInfo) VALUES('" + str(ClassId) + "' , N'"+TodoName+ "' , N'"+TodoDate+ "' , N'"+TodoInfo+"');" #日本語にはNWOつける
-                cursor.execute(sql)
-                conn.commit()
-                print("クラスの登録が終わりました")
+                self.cursor.execute(sql)
+                self.conn.commit()
 
     # ----------------------get系-----------------------------
     def getpassword(user_id): #パスワードの取得 user_id return
@@ -247,7 +288,7 @@ class COS5SQL:
                 sql = "SELECT * FROM UserInfo WHERE UserName = '"+user_id+"';"
                 cursor.execute(sql)
                 rows = cursor.fetchall()
-                print("ユーザ情報",rows[0][0],rows[0][1],rows[0][2],rows[0][3])
+                #print("ユーザ情報",rows[0][0],rows[0][1],rows[0][2],rows[0][3])
                 print("ユーザーの検索が終わりました")
                 return rows[0][0],rows[0][1],rows[0][2],rows[0][3]
 
@@ -257,7 +298,7 @@ class COS5SQL:
                 sql = "SELECT Info FROM UserInfo WHERE UserName = '"+class_name+"';"
                 cursor.execute(sql)
                 rows = cursor.fetchall()
-                print("ユーザ情報",rows)
+                #print("ユーザ情報",rows)
                 print("クラス情報の検索が終わりました")
                 return rows[0][0]
 
@@ -267,21 +308,17 @@ class COS5SQL:
                 sql = "SELECT Pass FROM UserInfo WHERE UserName = '"+user_id+"';"
                 cursor.execute(sql)
                 rows = cursor.fetchall()
-                print("ユーザ情報",rows[0][0])
+                #print("ユーザ情報",rows[0][0])
                 print("ユーザーの検索が終わりました")
                 return rows[0][0]
 
-    def get_Taking_class(UserIndex):
-        with pyodbc.connect('DRIVER='+driver+';SERVER='+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:
-            with conn.cursor() as cursor:
-                sql = "SELECT * FROM [dbo].[TakingClasses] WHERE UserId = '"+str(UserIndex)+"';"
-                cursor.execute(sql)
-                rows = cursor.fetchall()
-                print("クラス情報",rows)
-                print("取っているクラスの検索が終わりました")
 
+    def get_Taking_class(self,userId):
+                sql = "SELECT * FROM [dbo].[ClassInfo] WHERE ClassId IN (SELECT ClassId FROM [dbo].[TakingClasses] WHERE UserId="+str(userId)+");"
+                self.cursor.execute(sql)
+                rows = self.cursor.fetchall()
+                return rows
 
-                return rows[0][0]
 
 #-------デバック
 """
@@ -296,7 +333,8 @@ with COS5SQL() as cos5sql:
 
 #make_class("サマーハッカソン","2020年夏にアウトプットするぞ！！") #ここで作る。
 #get_class_all()
-#ToDo_insert(1,"中間課題","2020/8/14","8月15日までにやること")
+#ToDo_insert(2,"ハッカソン","2020/8/16","サマーハッカソン当日！")
 #print(GetTodo([1]))
 #Taking_class(0,1)
+#print(get_classname_from_index(2))
 

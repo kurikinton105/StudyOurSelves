@@ -13,13 +13,13 @@
     <body>
         <header>
             <div class="title">
-                <a href="index.html">SOS</a>
+                <a href="/">SOS</a>
             </div>
             <div class="menus">
                 <ul>
                     <!--ユーザー情報編集ページへ-->
-                    <li><a href="home_ver2.html">ユーザー名</a></li>
-                    <li><a href="index.html">ログアウト</a></li>
+                    <li><a href="/">{{username}}</a></li>
+                    <li><a href="/logout">ログアウト</a></li>
                 </ul>
             </div>
         </header>
@@ -30,9 +30,9 @@
                     <h2>演習問題</h2>
                 </div>
                 <div class="problem-statement">
-                    <h2>問</h2>
+                    <h2>{{Problem[2]}}</h2>
                     <p>
-                        {{ProblemText}}
+                        {{Problem[3]}}
                     </p>
                 </div>
                 <form action="" method="" name="">
@@ -47,7 +47,7 @@
                                 <td>
                                     <label for="1">
                                         <p>
-                                            {{selection[0]}}
+                                            {{Problem[4]}}
                                         </p>
                                     </label>
                                 </td>
@@ -60,7 +60,7 @@
                                 <td>
                                     <label for="2">
                                         <p>
-                                            {{selection[1]}}
+                                            {{Problem[5]}}
                                         </p>
                                     </label>
                                 </td>
@@ -73,7 +73,7 @@
                                 <td>
                                     <label for="3">
                                         <p>
-                                            {{selection[3]}}
+                                            {{Problem[6]}}
                                         </p>
                                     </label>
                                 </td>
@@ -85,7 +85,7 @@
                                 </th>
                                 <td>
                                     <label for="4">
-                                        <p>{{selection[4]}}</p>
+                                        <p>{{Problem[7]}}</p>
                                     </label>
                                 </td>
                             </tr>
@@ -100,10 +100,42 @@
                         {% if n < max %}
                             <a href="/class/{{classname}}/question?set={{setId}}&to=1&n={{n+1}}">次の問題へ</a>
                         {% endif %}
-                        <input type="submit" value="決定">
+                        <a id="open">回答</a>
+                        <dialog id="dialog">
+                            <h2>回答と解説</h2>
+                            <div class="dialog-content">
+                                <h3>答え:{{Problem[8]}}</h3>
+                                <h3>解説:</h3>
+                                <p>{{Problem[9]}}</p>                                
+                            </div>
+                            <p id="close" type="button">閉じる</p>
+                            </dialog>
                     </div>
+                        
                 </form>
             </div>
         </main>
+        <script>
+            (function() {
+                const open = document.getElementById('open');
+
+                const close = document.getElementById('close');
+
+                const dialog = document.getElementById('dialog');
+                open.addEventListener('click', () => {
+                    dialog.showModal();
+                });
+
+                close.addEventListener('click', function() {
+                    dialog.close();
+                });
+
+                dialog.addEventListener('click', (event) => {
+                    if (event.target === dialog) {
+                        dialog.close('cancelled');
+                    }
+                });
+            }());
+        </script>
     </body>
 </html>
