@@ -9,7 +9,7 @@ yama [@kurikinton105](https://github.com/kurikinton105)
 
 tomSoya [@tomsoyaN](https://github.com/tomsoyaN)
 
-jima884 [@jima884](https://github.com/jima884)
+jima884 [@jimar884](https://github.com/jimar884)
 
 ## 使うための前準備
 #### ライブラリのインストール
@@ -28,7 +28,9 @@ jima884 [@jima884](https://github.com/jima884)
 ## デモ
 #### AzureにWEBアプリケーションとして公開しています。
 
+[https://studyourtselves.azurewebsites.net/](https://studyourtselves.azurewebsites.net/)
 
+試験的に8月31日までの運用になると思います。
 
 ローカル環境での実行方法
 
