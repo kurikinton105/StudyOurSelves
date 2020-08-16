@@ -11,6 +11,7 @@ tomSoya [@tomsoyaN](https://github.com/tomsoyaN)
 
 jima884 [@jimar884](https://github.com/jimar884)
 
+また、後半部分の実際のコミットはSQLデータベースの接続の関係上、プライベートリポジトリでやっています。
 ## 使うための前準備
 #### ライブラリのインストール
 1. コマンドでフォルダ内に移動し 
@@ -31,6 +32,7 @@ jima884 [@jimar884](https://github.com/jimar884)
 [https://studyourtselves.azurewebsites.net/](https://studyourtselves.azurewebsites.net/)
 
 試験的に8月31日までの運用になると思います。
+
 
 ローカル環境での実行方法
 
