@@ -26,16 +26,16 @@
         <main>
             <div class="class">
                 <div class="title">
-                    <h1>{{classname}}</h1>
+                    <h1>{{classInfo[1]}}</h1>
                     <form action="" method="POST" name="">
                         
                         <div class="button">
                             {% if isTake == False %}
-                                <a class="button" href="/class/{{classname}}/register?id={{classId}}">登録</a>
+                                <a class="button" href="/class/{{classInfo[1]}}/register?id={{classId}}">登録</a>
                             {% endif %}
                             {% if isTake == True %}
                                 <a>登録済み</a>
-                                <a class="button" href="/class/{{classname}}/release?id={{classId}}">解除</a>
+                                <a class="button" href="/class/{{classInfo[1]}}/release?id={{classId}}">解除</a>
                             {% endif %}
                         </div>
                         
@@ -49,7 +49,7 @@
                         <h2>授業概要</h2>
                     </div>
                     <div class="content">
-                        <p>{{info_class}}</p>
+                        <p>{{classInfo[2]}}</p>
                     </div>
                 </section>
                 <section>
@@ -57,33 +57,17 @@
                         <h2>授業スケジュール</h2>
                     </div>
                     <div class="content">
-                        <div class="event">
-                            <div class="date">2020-8-15</div>
-                            <div class="event-name">
-                                <h3>イベント名</h3>
+                        {% for todo in Todos %}
+                            <div class="event">
+                                <div class="date">{{todo[2]}}</div>
+                                <div class="event-name">
+                                    <h3>{{todo[1]}}</h3>
+                                </div>
+                                <p class="info">
+                                    {{todo[3]}}
+                                </p>
                             </div>
-                            <p class="info">
-                                ここにイベントの詳細書いてくれ
-                            </p>
-                        </div>
-                        <div class="event">
-                            <div class="date">2020-8-15</div>
-                            <div class="event-name">
-                                <h3>イベント名</h3>
-                            </div>
-                            <p class="info">
-                                ここにイベントの詳細書いてくれ
-                            </p>
-                        </div>
-                        <div class="event">
-                            <div class="date">2020-8-15</div>
-                            <div class="event-name">
-                                <h3>イベント名</h3>
-                            </div>
-                            <p class="info">
-                                ここにイベントの詳細書いてくれ
-                            </p>
-                        </div>
+                        {% endfor %}
                     </div>
                 </section>
                 <section>
@@ -93,7 +77,7 @@
                     <div class="content">
                         {% if isTake == True %}
                             <div class="make-q-set">
-                                <form action="/class/{{classname}}/makeSet" method="POST" >
+                                <form action="/class/{{classInfo[1]}}/makeSet?id={{classId}}" method="POST" >
                                     <input type="text" name='SetName' placeholder="作成したい問題セット名">
                                     <input type="submit" value="作成">
                                 </form>
@@ -107,9 +91,9 @@
                                     </div>
                                 </li>
                                 <div class="button">
-                                    <a class="button" href="/class/{{classname}}/question?set={{set[0]}}">解く</a>
-                                    <a class="button" href="/class/{{classname}}/register_question?set={{set[0]}}">問題追加</a>
-                                    <a class="button" href="/class/{{classname}}/question_list?set={{set[0]}}">問題リスト</a>
+                                    <a class="button" href="/class/{{classInfo[1]}}/question?set={{set[0]}}&id={{classId}}">解く</a>
+                                    <a class="button" href="/class/{{classInfo[1]}}/register_question?set={{set[0]}}&id={{classId}}">問題追加</a>
+                                    <a class="button" href="/class/{{classInfo[1]}}/question_list?set={{set[0]}}&id={{classId}}">問題リスト</a>
                                 </div>
                             {% endfor %}
                         </ul>

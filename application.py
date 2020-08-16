@@ -82,29 +82,21 @@ def home():
        error_flag = False
        return render_template('index.html')
    else:
-        print("ログイン")
+        print("ログインなう")
+        with COS5SQL() as cos5sql:
+            classlist=cos5sql.get_Taking_class(database_user_index)
         #取っているクラスの情報を取得
         taking_class_index = get_Taking_class(database_user_index)
         #print("ユーザーindex",database_user_index)
         #print("取っているインデックス",taking_class_index)
         #インデックスからクラスのToDoを取得
-        ToDoList_json = GetTodo(taking_class_index) #データの取得をここで行なっている。
-        #print("履修している科目",ToDoList_json)
+
+        ToDoList_json = GetTodo(classlist) #データの取得をここで行なっている。
+        print("履修している科目",ToDoList_json)
         #予定データのソート
         sort_cut_data = calender_sort(ToDoList_json) # ソートはcode_def.py内にて定義
-        #print("sort_cut_data",sort_cut_data)
-
-        classlist_user =[]
-        for i in range(len(taking_class_index)):
-            classname = get_classname_from_index(taking_class_index[i]) #
-            classlist_user.append(classname)
-        #print("取っているクラスの一覧",classlist_user)
-        #print("----ここで表示----")
-        #クラス情報の一覧を取得する
-        global classlist_json
-        classlist_json=get_class_all()
-
-        return render_template('home_ver2.html',id_name=database_user_id, ToDo = sort_cut_data,classlist_user = classlist_user,username = database_user_id)
+        print("sort_cut_data",sort_cut_data)
+        return render_template('home_ver2.html',id_name=database_user_id, ToDo = sort_cut_data,classlist_user = classlist)
 
 # ------------------------------------------------------------------
 @app.route('/login')
@@ -216,12 +208,13 @@ def searching():
 @flask_login.login_required
 def classpage(classname):
     isSearch = int(request.args.get('search')) if request.args.get('search') != None else 0
+    classId = int(request.args.get('id'))
     with COS5SQL() as cos5sql:
-        classId = cos5sql.GetClassId(classname)
         isTakeClass = cos5sql.IsTakeClass(database_user_index,classId)
+        classInfo = cos5sql.GetClassInfo(classId)
+        todos = cos5sql.GetTodoList(classId)
         ProblemSets = cos5sql.GetProblemSetInfo(classId)
-    return render_template("class.html",classname = classname,ProblemSets = ProblemSets,search=isSearch,classId = classId,isTake = isTakeClass,username = database_user_id)
-
+    return render_template("class.html",classInfo = classInfo,Todos=todos,ProblemSets = ProblemSets,search=isSearch,classId = classId,isTake = isTakeClass,username = database_user_id)
 @app.route('/class/<classname>/register')
 @flask_login.login_required
 def class_register(classname):
@@ -305,39 +298,44 @@ def make_class_post():
 @app.route('/class/<classname>/register_question',methods=['GET'])
 @flask_login.login_required
 def register_question_get(classname):
-    return render_template("register_question.html",class_name = classname,username = database_user_id)
+    classId = int(request.args.get('id'))
+    return render_template("register_question.html",class_name = classname,classId=classId,username = database_user_id)
+
 
 @app.route('/class/<classname>/register_question_post',methods=['POST'])
 @flask_login.login_required
 def register_question_post(classname):
     setId = request.args.get('set')
     if(setId == None): flask.abort(400,'Invalid Request')
+    classId = int(request.args.get('id'))
     name = flask.request.form['name']
     question = flask.request.form['question']
     selection = [flask.request.form['selection1'],flask.request.form['selection2'],flask.request.form['selection3'],flask.request.form['selection4']]
     answer = flask.request.form['answer']
     solution = flask.request.form['solution']
     with COS5SQL() as cos5sql:
-        classid = cos5sql.GetClassId(classname)
-        problemId = cos5sql.InsertProblem(classid,name,question,selection,answer,solution)
+        problemId = cos5sql.InsertProblem(classId,name,question,selection,answer,solution)
         cos5sql.AddProblem2Set(setId,problemId)
-    return flask.redirect(flask.url_for('classpage',classname=classname,username = database_user_id))
+    return flask.redirect(flask.url_for('classpage',classname=classname,id=classId,username = database_user_id))
+
 
 @app.route('/class/<classname>/edit_question',methods=['GET'])
 @flask_login.login_required
 def edit_question(classname):
     setId = request.args.get('set')
     problemId = request.args.get('id')
+    classId = int(request.args.get('cid'))
     if(setId == None or problemId ==None): flask.abort(400,'Invalid Request')
     with COS5SQL() as cos5sql:
         problem = cos5sql.GetProblem(problemId)
-    return flask.render_template('edit_question.html',classname=classname,setId=setId,problem=problem,username = database_user_id)
-
+    return flask.render_template('edit_question.html',classname=classname,setId=setId,problem=problem,classId=classId,username = database_user_id)
+  
 @app.route('/class/<classname>/edit_question_post',methods=['POST'])
 @flask_login.login_required
 def edit_question_post(classname):
     setId = request.args.get('set')
     problemId = request.args.get('id')
+    classId = int(request.args.get('cid'))
     if(setId == None or problemId ==None): flask.abort(400,'Invalid Request')
     name = flask.request.form['name']
     question = flask.request.form['question']
@@ -345,32 +343,33 @@ def edit_question_post(classname):
     answer = flask.request.form['answer']
     solution = flask.request.form['solution']
     with COS5SQL() as cos5sql:
-        classId = cos5sql.GetClassId(classname)
         cos5sql.UpdateProblem(classId,problemId,name,question,selection,answer,solution)
-
-    return flask.redirect(flask.url_for('question_list',classname=classname,set=setId,username = database_user_id))
-
+    return flask.redirect(flask.url_for('question_list',classname=classname,set=setId,id=classId,username = database_user_id))
+  
 @app.route('/class/<classname>/delete_question',methods=['GET'])
 @flask_login.login_required
 def delete_question(classname):
     setId = request.args.get('set')
     problemId = request.args.get('id')
+    classId = int(request.args.get('cid'))
     if(setId == None or problemId ==None): flask.abort(400,'Invalid Request')
     with COS5SQL() as cos5sql:
         cos5sql.RemoveProblemFSet(setId,problemId)
         cos5sql.DeleteProblem(problemId)
-    return flask.redirect(flask.url_for('question_list',classname=classname,set=setId,username = database_user_id))
+    return flask.redirect(flask.url_for('question_list',classname=classname,set=setId,id=classId,username = database_user_id))
 
 
 @app.route('/class/<classname>/question_list',methods=['GET'])
 @flask_login.login_required
 def question_list(classname):
     setId = request.args.get('set')
+    classId = int(request.args.get('id'))
     if(setId == None): flask.abort(400,'Invalid Request')
     with COS5SQL() as cos5sql:
         setTitle = cos5sql.GetProblemSetInfoByID(setId)[1]
         ProblemSet = cos5sql.GetProblemSet(setId)
-    return render_template("question_list.html",classname=classname,setId = setId,setTitle = setTitle,ProblemSet=ProblemSet,username = database_user_id)
+    return render_template("question_list.html",classname=classname,setId = setId,setTitle = setTitle,ProblemSet=ProblemSet,classId=classId,username = database_user_id)
+
 
 
 @app.route('/class/<classname>/question',methods=['GET'])
@@ -378,24 +377,25 @@ def question_list(classname):
 def question_get(classname):
     setId = request.args.get('set')
     n = int(request.args.get('n')) if request.args.get('n') != None else 1
+    classId = int(request.args.get('id'))
     if(setId == None): flask.abort(400,'Invalid Request')
     with COS5SQL() as cos5sql:
         ProblemSet = cos5sql.GetProblemSet(setId)
     Problem = ProblemSet[n-1]
     if(n == None):
-        return render_template("question.html",classname=classname,setId = setId,Problem=Problem,n=1,max=len(ProblemSet),username = database_user_id)
-    elif(n != None):
-        return render_template("question.html",classname=classname,setId = setId,Problem=Problem,n=n,max=len(ProblemSet),username = database_user_id)
 
+        return render_template("question.html",classname=classname,setId = setId,Problem=Problem,n=1,max=len(ProblemSet),classId=classId,username = database_user_id)
+    elif(n != None):
+        return render_template("question.html",classname=classname,setId = setId,Problem=Problem,n=n,max=len(ProblemSet),classId=classId,username = database_user_id)
 @app.route('/class/<classname>/makeSet',methods=['POST'])
 @flask_login.login_required
 def make_problemSet(classname):
     SetName = flask.request.form['SetName']
+    classId = int(request.args.get('id'))
     with COS5SQL() as cos5sql:
         setId = cos5sql.AddProblemSet(SetName,"")
-        classId = cos5sql.GetClassId(classname)
         cos5sql.AddProblemSet2Class(classId,setId)
-    return flask.redirect(flask.url_for('classpage',classname=classname,username = database_user_id))
+    return flask.redirect(flask.url_for('classpage',classname=classname,id=classId,username = database_user_id))
 
 # ------------------------------------------------------------------
 @app.route("/logout")

@@ -64,3 +64,26 @@ main h1{
 main p{
     font-weight: bold;
 }
+
+footer{
+    background-color: black;
+    color: white;
+    padding: 2rem;
+}
+footer h2{
+    font-family: serif;
+}
+.team-name{
+    font-family: serif;
+}
+.member{
+    max-width: 20rem;
+    margin-left: 3rem;
+    margin-bottom: 2rem;
+}
+.member li a{
+    color: white;
+}
+.member li a:hover{
+    color: yellow;
+}

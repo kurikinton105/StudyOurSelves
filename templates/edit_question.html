@@ -28,7 +28,7 @@
                 <h1 class="class-name">授業名</h1>
                 <h2 class="mode">問題編集</h2>
                 <div class="question">
-                    <form action="/class/{{classname}}/edit_question_post?set={{setId}}&id={{problem[0]}}" method="POST">
+                    <form action="/class/{{classname}}/edit_question_post?set={{setId}}&id={{problem[0]}}&cid={{classId}}" method="POST">
                         <h2>問題名</h2>
                         <input type="text" name="name" placeholder="問題名を書いてください" value="{{problem[2]}}">
                         <h2>問題文</h2>

@@ -18,7 +18,7 @@
             <div class="menus">
                 <ul>
                     <!--ユーザー情報編集ページへ-->
-                    <li><a href="/">{{username}}</a></li>
+                    <li><a href="/">{{id_name}}</a></li>
                     <li><a href="/logout">ログアウト</a></li>
                 </ul>
             </div>
@@ -35,7 +35,7 @@
                 <h1>Classes</h1>
                 <ul>
                     {% for class_user in classlist_user %}
-                        <li><a href="/class/{{class_user}}">{{class_user}}</a></li>
+                        <li><a href="/class/{{class_user[1]}}?id={{class_user[0]}}">{{class_user[1]}}</a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -45,7 +45,7 @@
                     <div class="event">
                         <div class="date">{{ToDoContent[2]}}</div>
                         <div class="sub-title">
-                            <a href="/class/{{classlist_user[ToDoContent[0]]}}">{{classlist_user[ToDoContent[0]]}}</a>  {{ToDoContent[1]}}
+                            <a href="/class/{{ToDoContent[4]}}?id={{ToDoContent[0]}}">{{ToDoContent[4]}}</a>  {{ToDoContent[1]}}
                         </div>
                         <p class="info">
                             {{ToDoContent[3]}}
@@ -54,5 +54,14 @@
                 {% endfor %}
             </div>
         </main>
+        <footer>
+            <h1 class="team-name">Cos5year</h1>
+            <h2>Member</h2>
+            <ul class="member">
+                <li><a href="https://github.com/jimar884">jimar884</a></li>
+                <li><a href="https://github.com/kurikinton105">kurikinton105</a></li>
+                <li><a href="https://github.com/tomsoyaN">tomSoya</a></li>
+            </ul>
+        </footer>
     </body>
 </html>

@@ -36,8 +36,8 @@
                                         {{problem[2]}}
                                     </div>
                                     <div class="q-buttons">
-                                        <a class="q-button" href="/class/{{classname}}/delete_question?set={{setId}}&id={{problem[0]}}">削除</a>
-                                        <a class="q-button" href="/class/{{classname}}/edit_question?set={{setId}}&id={{problem[0]}}">編集</a>
+                                        <a class="q-button" href="/class/{{classname}}/delete_question?set={{setId}}&id={{problem[0]}}&cid={{classId}}">削除</a>
+                                        <a class="q-button" href="/class/{{classname}}/edit_question?set={{setId}}&id={{problem[0]}}&cid={{classId}}">編集</a>
                                     </div>
                                 </p>
                             </li>
@@ -45,8 +45,8 @@
                     </ul>
                 </form>
                 <div class="button">
-                    <a class="button" href="/class/{{classname}}">授業ページへ</a>
-                    <a class="button" href="/class/{{classname}}/register_question?set={{setId}}">追加する</a>
+                    <a class="button" href="/class/{{classname}}?id={{classId}}">授業ページへ</a>
+                    <a class="button" href="/class/{{classname}}/register_question?set={{setId}}&id={{classId}}">追加する</a>
                 </div>
             </div>
         </main>

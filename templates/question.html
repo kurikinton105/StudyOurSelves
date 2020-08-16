@@ -93,12 +93,12 @@
                         </table>
                     </div>
                     <div class="button">
-                        <a href="/class/{{classname}}">中止</a>
+                        <a href="/class/{{classname}}?id={{classId}}">中止</a>
                         {% if n > 1%}
-                            <a href="/class/{{classname}}/question?set={{setId}}&to=1&n={{n-1}}">前の問題へ</a>
+                            <a href="/class/{{classname}}/question?set={{setId}}&n={{n-1}}&id={{classId}}">前の問題へ</a>
                         {% endif %}
                         {% if n < max %}
-                            <a href="/class/{{classname}}/question?set={{setId}}&to=1&n={{n+1}}">次の問題へ</a>
+                            <a href="/class/{{classname}}/question?set={{setId}}&n={{n+1}}&id={{classId}}">次の問題へ</a>
                         {% endif %}
                         <a id="open">回答</a>
                         <dialog id="dialog">

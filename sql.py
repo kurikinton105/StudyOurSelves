@@ -104,14 +104,15 @@ def GetTodo(ClassId_list): #ユーザが取っているクラスのToDを返却�
         conn.setencoding('utf-8')
         with conn.cursor() as cursor:
             ToDoList_user =[]
-            for i in range(len(ClassId_list)):
-                sql = "SELECT * FROM [dbo].[ToDos] WHERE ClassId = '"+str(ClassId_list[i])+"';"
+            for j in range(len(ClassId_list)):
+                sql = "SELECT * FROM [dbo].[ToDos] WHERE ClassId = '"+str(ClassId_list[j][0])+"';"
                 cursor.execute(sql)
                 rows = cursor.fetchall()
                 #rows=rows.encode("utf8")
                 #print("クラスToDo情報",rows)
                 if rows != []:
                     for i in range(len(rows)):
+                        rows[i] = (rows[i][0],rows[i][1],rows[i][2],rows[i][3],ClassId_list[j][1])
                         ToDoList_user.append(rows[i])
                 #print("クラスのToDoの検索が終わりました")
             return ToDoList_user
@@ -167,6 +168,10 @@ class COS5SQL:
         else:
             print("データベースエラー:複数Id存在")
 
+    def GetClassInfo(self,classId):
+        self.cursor.execute("SELECT * FROM [dbo].[ClassInfo] WHERE ClassId = " + str(classId))
+        row = self.cursor.fetchone()
+        return row
     def GetProblemSetInfo(self,classId):
         self.cursor.execute("SELECT * FROM [dbo].[ProblemSetInfo] WHERE ProblemSetId IN (SELECT ProblemSetId FROM [dbo].[ClassProblemSets] WHERE ClassId=" + str(classId) +")" )
         rows = self.cursor.fetchall()
@@ -202,6 +207,12 @@ class COS5SQL:
         print(sql)
         self.cursor.execute(sql)
         self.conn.commit()
+
+    def GetTodoList(self,classId): #ユーザが取っているクラスのToDを返却します。（index,return:ToDoの情報）
+                sql = "SELECT * FROM [dbo].[ToDos] WHERE ClassId = "+str(classId)
+                self.cursor.execute(sql)
+                rows = self.cursor.fetchall()
+                return rows
 
     def InsertProblem(self,classId,name,question,selections,answer,solution):
         sql = "INSERT INTO [dbo].[Problem] (ClassId,ProblemName,ProblemText,Selection1,Selection2,Selection3,Selection4,Answer,Solution)\
@@ -243,7 +254,6 @@ class COS5SQL:
     def IsTakeClass(self,userId,classId):
         self.cursor.execute("SELECT * FROM [dbo].[TakingClasses] WHERE UserId = "+str(userId)+"AND ClassId =" + str(classId))
         rows = self.cursor.fetchone()
-        #print("-------------------------\n",rows)
         if(rows == None):
             return False
         else:

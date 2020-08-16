@@ -30,7 +30,7 @@
                 <h2 class="mode">問題追加</h2>
 
                 <div class="question">
-                    <form action="/class/{{class_name}}/register_question_post?set={{ request.args.get('set') }}" method="POST">
+                    <form action="/class/{{class_name}}/register_question_post?set={{ request.args.get('set') }}&id={{classId}}" method="POST">
                         <h2>問題名</h2>
                         <input type="text" name="name" placeholder="問題名を書いてください">
                         <h2>問題文</h2>
