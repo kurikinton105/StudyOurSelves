@@ -29,7 +29,7 @@ jima884 [@jimar884](https://github.com/jimar884)
 ## デモ
 #### AzureにWEBアプリケーションとして公開しています。
 
-[https://studyourtselves.azurewebsites.net/](https://studyourtselves.azurewebsites.net/)
+[https://studyourselves.azurewebsites.net/](https://studyourselves.azurewebsites.net/)
 
 試験的に8月31日までの運用になると思います。
 
